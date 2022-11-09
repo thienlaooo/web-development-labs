@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Enum, Date, Boolean,
 from sqlalchemy.orm import declarative_base, relationship, validates
 import enum
 import re
+import bcrypt
 
 Base = declarative_base()
 
@@ -68,8 +69,8 @@ class User(Base):
     first_name = Column(String)
     last_name = Column(String)
     password = Column(String)
-    phone = Column(String)
-    email = Column(String)
+    phone = Column(String, unique=True)
+    email = Column(String, unique=True)
     role = Column(Enum(roles))
 
     def to_dict(self) -> dict:
@@ -109,8 +110,9 @@ class User(Base):
     def validate_password(self, key, password: str):
         if User.__password_r.match(password) is None:
             raise ValueError("This is not password(8 characters long+, one letter and number")
-
-        return password
+        new_password = bytes(password, "utf-8")
+        new_password = bcrypt.hashpw(new_password, bcrypt.gensalt(12))
+        return new_password.decode("utf-8")
 
     @validates("phone")
     def validate_phone(self, key, phone):

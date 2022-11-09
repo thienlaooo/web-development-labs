@@ -1,9 +1,9 @@
 import json
 
 from flask import Flask, Blueprint, Response, request
-from psycopg2 import IntegrityError
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import IntegrityError
 from Models.Models import Medicine
 from api.Encoder import AlchemyEncoder
 
@@ -67,3 +67,20 @@ def delete_medicine(medicineId):
     except IntegrityError:
         return Response("Delete failed", status=402)
     return Response("Medicine was deleted", status=200)
+
+
+@medicine_api.route("/api/v1/medicine/addInDemand", methods=['POST'])
+def add_in_demand_medicine():
+    demand_data = request.get_json()
+    if demand_data is None:
+        return Response(status=402)
+    medicine = session.query(Medicine)
+    currentMedicine = medicine.get(int(demand_data["medicine"]))
+    if currentMedicine is None:
+        return Response("Medicine doesn't exist", status=404)
+    session.query(Medicine).filter(Medicine.id == demand_data["medicine"]).update({"inDemand" : True}, synchronize_session="fetch")
+    try:
+        session.commit()
+    except IntegrityError:
+        return Response("Add in demand failed", status=402)
+    return Response("Medicine was added in demand", status=200)

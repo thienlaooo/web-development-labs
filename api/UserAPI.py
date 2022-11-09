@@ -1,7 +1,8 @@
 from flask import Flask, Blueprint, Response, request, jsonify, json
 import json
-from psycopg2 import IntegrityError
-from sqlalchemy import create_engine
+import bcrypt
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
 from Models.Models import User
 from Encoder import AlchemyEncoder
@@ -11,35 +12,18 @@ session = Session()
 user_api = Blueprint('user_api', __name__)
 
 
-
-
 @user_api.route("/api/v1/user", methods=['POST'])
 def create_user():
     user_data = request.get_json()
     if user_data is None:
         return Response(status=402)
-    if(('first_name' in user_data) and
-            ('last_name' in user_data) and
-            ('password' in user_data) and
-            ('phone' in user_data) and
-            ('email' in user_data) and
-            ('role' in user_data)):
-        first_name = user_data['first_name']
-        last_name = user_data['last_name']
-        password = user_data['password']
-        phone = user_data['phone']
-        email = user_data['email']
-        role = user_data['role']
-        user = User(first_name=first_name, last_name=last_name, password=password, phone=phone,
-                    email=email, role=role)
+    try:
+        user = User(**user_data)
         session.add(user)
-        try:
-            session.commit()
-        except IntegrityError:
-            return Response("Popusk na useri", status=402)
-        return Response("Harosh", status=200)
-    else:
-        Response("Popusk na useri", status=402)
+        session.commit()
+    except IntegrityError:
+        return Response("Popusk na useri", status=402)
+    return Response("Harosh", status=200)
 
 
 @user_api.route("/api/v1/user/<userId>", methods=['GET'])
@@ -67,3 +51,37 @@ def delete_user(userId):
     except IntegrityError:
         return Response("Delete failed", status=402)
     return Response("User was deleted", status=200)
+
+
+@user_api.route("/api/v1/user", methods=['PUT'])
+def update_user():
+    user_data = request.get_json()
+    if user_data is None:
+        return Response(status=402)
+    if('id' in user_data):
+        user = User(**user_data)
+        session.query(User).filter(User.id == user.id).update(user_data, synchronize_session="fetch")
+        try:
+            session.commit()
+        except IntegrityError:
+            return Response("Update failed", status=402)
+        return Response("User was updated", status=200)
+
+
+@user_api.route("/api/v1/user/login", methods=['GET'])
+def login_user():
+    data = request.get_json()
+    if data is None:
+        return Response("No JSON data has been specified!", status=400)
+    try:
+        if 'password' in data and 'email' in data:
+            with Session.begin() as session:
+                user = session.query(User).filter_by(email=data['email']).first()
+                if not bcrypt.checkpw(data['password'].encode("utf-8"), user.password.encode("utf-8")):
+                    return Response("Invalid password or email specified", status=404)
+
+                return Response(json.dumps(user.to_dict()), status=200)
+    except IntegrityError:
+        return Response("Invalid username or password specified", status=400)
+
+    return Response("Invalid request body, specify password and username, please!", status=400)
