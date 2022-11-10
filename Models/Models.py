@@ -33,6 +33,7 @@ class Medicine(Base):
     producer=Column(String)
     photoUrls=Column(ARRAY(String))
     inDemand=Column(Boolean)
+    order_medicine = relationship("Order_Medicine", cascade="all, delete")
     @validates("price")
     def check_price(self, key, price):
         if price <= 0:
@@ -57,11 +58,24 @@ class Order(Base):
     customer_id = Column( Integer, ForeignKey("User.id"))
     date = Column(Date)
     status = Column(Enum(statuss))
+    customer = relationship("User")
+    order_medicine = relationship("Order_Medicine", cascade="all, delete")
+    def to_dict(self) -> dict:
+        return {
+            'customer_id': self.customer_id,
+            'date': str(self.date),
+            'status': str(self.status)
+        }
 
-class Order_Items(Base):
-    __tablename__ = 'Order_Items'
-    prescription_id=Column(Integer,ForeignKey("Order.id"), primary_key=True)
-    medication_id=Column(Integer,ForeignKey("Medicine.id"), primary_key=True)
+
+class Order_Medicine(Base):
+    __tablename__ = 'Order_Medicine'
+    order_id=Column(Integer,ForeignKey("Order.id"), primary_key=True)
+    medicine_id=Column(Integer,ForeignKey("Medicine.id"), primary_key=True)
+
+    order = relationship("Order")
+    medicine = relationship("Medicine")
+
 
 class User(Base):
     __tablename__= 'User'
@@ -72,7 +86,7 @@ class User(Base):
     phone = Column(String, unique=True)
     email = Column(String, unique=True)
     role = Column(Enum(roles))
-
+    order = relationship("Order", cascade="all, delete")
     def to_dict(self) -> dict:
         return {
             'first_name': self.first_name,
