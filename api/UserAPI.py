@@ -16,7 +16,7 @@ user_api = Blueprint('user_api', __name__)
 def create_user():
     user_data = request.get_json()
     if user_data is None:
-        return Response(status=400)
+        return Response("Invalid request body!", status=400)
     try:
         user = User(**user_data)
         session.add(user)
@@ -57,7 +57,7 @@ def delete_user(userId):
 def update_user():
     user_data = request.get_json()
     if user_data is None:
-        return Response(status=400)
+        return Response("Invalid request body!", status=400)
     if 'id' in user_data:
         try:
             user = User(**user_data)
@@ -73,7 +73,7 @@ def update_user():
 def login_user():
     data = request.get_json()
     if data is None:
-        return Response("Json error!", status=400)
+        return Response("Invalid request body!", status=400)
     try:
         if 'password' in data and 'email' in data:
             user = session.query(User).filter_by(email=data['email']).first()

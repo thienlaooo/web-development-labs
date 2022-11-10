@@ -15,7 +15,7 @@ store_api = Blueprint('store_api', __name__)
 def create_order():
     order_data = request.get_json()
     if order_data is None:
-        return Response(status=402)
+        return Response("Invalid request body!", status=400)
     try:
         order = Order(**order_data)
         session.add(order)
@@ -44,7 +44,7 @@ def get_inventory():
 def add_medicine_to_order():
     order_medicine_data = request.get_json()
     if order_medicine_data is None:
-        return Response(status=402)
+        return Response("Invalid request body!", status=400)
     medicine = session.query(Medicine)
     current_medicine = medicine.get(int(order_medicine_data['medicine_id']))
     if current_medicine is None:
@@ -66,7 +66,7 @@ def add_medicine_to_order():
 def get_order_items(orderId):
     current_order = session.query(Order).get(int(orderId))
     if current_order is None:
-        return Response('User not found', 404)
+        return Response('Order not found', 404)
     medicines = session.query(Order_Medicine).filter_by(order_id=orderId)
     response_json = []
     if medicines is None:
@@ -105,3 +105,17 @@ def delete_order(orderId):
     except IntegrityError:
         return Response("Delete failed", status=402)
     return Response("Order was deleted", status=200)
+
+
+@store_api.route("/api/v1/store/order/<orderId>/<medicineId>", methods=['DELETE'])
+def delete_medicine_from_order(orderId, medicineId):
+    order_medicine = session.query(Order_Medicine)
+    current_event = order_medicine.filter_by(order_id=int(orderId), medicine_id=int(medicineId)).first()
+    if current_event is None:
+        return Response('Medicine is not in order', 402)
+    try:
+        session.delete(current_event)
+        session.commit()
+    except IntegrityError:
+        return Response("Delete failed", status=402)
+    return Response("Medicine was deleted from order", status=200)

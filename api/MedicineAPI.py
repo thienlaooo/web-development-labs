@@ -17,7 +17,7 @@ medicine_api = Blueprint('medicine_api', __name__)
 def create_medicine():
     medicine_data = request.get_json()
     if medicine_data is None:
-        return Response(status=402)
+        return Response("Invalid request body!", status=400)
     try:
         medicine = Medicine(**medicine_data)
         medicine_query = session.query(Medicine)
@@ -48,7 +48,7 @@ def get_medicine(medicineId):
 def update_medicine():
     medicine_data = request.get_json()
     if medicine_data is None:
-        return Response(status=400)
+        return Response("Invalid request body!", status=400)
     if 'id' in medicine_data:
         try:
             medicine = Medicine(**medicine_data)
@@ -78,7 +78,7 @@ def delete_medicine(medicineId):
 def add_in_demand_medicine():
     demand_data = request.get_json()
     if demand_data is None:
-        return Response(status=402)
+        return Response("Invalid request body!", status=400)
     medicine = session.query(Medicine)
     currentMedicine = medicine.get(int(demand_data["medicine"]))
     if currentMedicine is None:
@@ -95,7 +95,7 @@ def add_in_demand_medicine():
 def add_photos_to_medicine(medicineId):
     photos_data = request.get_json()
     if photos_data is None:
-        return Response(status=402)
+        return Response("Invalid request body!", status=400)
     medicine = session.query(Medicine)
     currentMedicine = medicine.get(int(medicineId))
     if currentMedicine is None:
