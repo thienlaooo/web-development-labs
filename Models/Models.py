@@ -34,12 +34,20 @@ class Medicine(Base):
     photoUrls=Column(ARRAY(String))
     inDemand=Column(Boolean)
     order_medicine = relationship("Order_Medicine", cascade="all, delete")
+
     @validates("price")
     def check_price(self, key, price):
         if price <= 0:
-            raise ValueError("Daun, vvedy norm chyslo")
+            raise ValueError("Incorrect price!")
         else:
             return price
+
+    @validates("quantity")
+    def check_price(self, key, quantity):
+        if quantity <= 0:
+            raise ValueError("Incorrect quantity!")
+        else:
+            return quantity
 
     def to_dict(self) -> dict:
         return {
