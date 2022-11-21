@@ -4,7 +4,7 @@ from psycopg2 import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
 from Models.Models import Order, Medicine, Order_Medicine, roles
-from Encoder import AlchemyEncoder
+from api.Encoder import AlchemyEncoder
 from api.Auth import auth
 
 engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")

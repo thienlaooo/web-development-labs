@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
 from Models.Models import User
-from Encoder import AlchemyEncoder
+from api.Encoder import AlchemyEncoder
 from api.Auth import auth
 
 engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")

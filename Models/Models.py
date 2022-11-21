@@ -10,7 +10,7 @@ Base = declarative_base()
 def validate_name(name):
     length = len(name)
     if length <= 3 or length > 40:
-        raise ValueError("Length of username should be less than 40 and more than 4 characters long")
+        raise ValueError("Length of name should be less than 40 and more than 4 characters long")
     return name
 
 
@@ -18,22 +18,24 @@ class roles(enum.Enum):
     customer = "customer"
     pharmacist = "pharmacist"
 
+
 class statuss(enum.Enum):
     placed = "placed"
     approved = "approved"
     delivered = "delivered"
     completed = "completed"
 
+
 class Medicine(Base):
     __tablename__ = 'Medicine'
-    id=Column(Integer,primary_key=True)
-    name=Column(String)
-    quantity=Column(Integer)
-    price=Column(Integer)
-    producer=Column(String)
-    photoUrls=Column(ARRAY(String))
-    inDemand=Column(Boolean)
-    order_medicine = relationship("Order_Medicine", cascade="all, delete")
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    quantity = Column(Integer)
+    price = Column(Integer)
+    producer = Column(String)
+    photoUrls = Column(ARRAY(String))
+    inDemand = Column(Boolean)
+    order_medicine = relationship("Order_Medicine", cascade="all, delete", back_populates="medicine")
 
     @validates("price")
     def check_price(self, key, price):
@@ -43,7 +45,7 @@ class Medicine(Base):
             return price
 
     @validates("quantity")
-    def check_price(self, key, quantity):
+    def check_quantity(self, key, quantity):
         if quantity <= 0:
             raise ValueError("Incorrect quantity!")
         else:
@@ -63,11 +65,12 @@ class Medicine(Base):
 class Order(Base):
     __tablename__ = 'Order'
     id = Column(Integer, primary_key=True)
-    customer_id = Column( Integer, ForeignKey("User.id"))
+    customer_id = Column(Integer, ForeignKey("User.id"))
     date = Column(Date)
     status = Column(Enum(statuss))
-    customer = relationship("User")
-    order_medicine = relationship("Order_Medicine", cascade="all, delete")
+    customer = relationship("User", back_populates="order")
+    order_medicine = relationship("Order_Medicine", cascade="all, delete", back_populates="order")
+
     def to_dict(self) -> dict:
         return {
             'customer_id': self.customer_id,
@@ -81,8 +84,8 @@ class Order_Medicine(Base):
     order_id=Column(Integer,ForeignKey("Order.id"), primary_key=True)
     medicine_id=Column(Integer,ForeignKey("Medicine.id"), primary_key=True)
 
-    order = relationship("Order")
-    medicine = relationship("Medicine")
+    order = relationship("Order", back_populates="order_medicine")
+    medicine = relationship("Medicine", back_populates="order_medicine")
 
 
 class User(Base):
@@ -94,7 +97,8 @@ class User(Base):
     phone = Column(String, unique=True)
     email = Column(String, unique=True)
     role = Column(Enum(roles))
-    order = relationship("Order", cascade="all, delete")
+    order = relationship("Order", cascade="all, delete", back_populates="customer")
+
     def to_dict(self) -> dict:
         return {
             'first_name': self.first_name,
@@ -142,9 +146,3 @@ class User(Base):
             raise ValueError("This is not a phone number")
 
         return phone
-
-
-
-
-
-
