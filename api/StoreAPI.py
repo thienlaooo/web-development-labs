@@ -3,26 +3,14 @@ import json
 from psycopg2 import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
-from Models.Models import Order, Medicine, Order_Medicine
+from Models.Models import Order, Medicine, Order_Medicine, roles
 from Encoder import AlchemyEncoder
+from api.Auth import auth
+
 engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
 Session = sessionmaker(bind=engine)
 session = Session()
 store_api = Blueprint('store_api', __name__)
-
-
-@store_api.route("/api/v1/store/order", methods=['POST'])
-def create_order():
-    order_data = request.get_json()
-    if order_data is None:
-        return Response("Invalid request body!", status=400)
-    try:
-        order = Order(**order_data)
-        session.add(order)
-        session.commit()
-    except IntegrityError:
-        return Response("Create failed", status=402)
-    return Response("Order was created", status=200)
 
 
 @store_api.route("/api/v1/store/inventory", methods=['GET'])
@@ -40,7 +28,24 @@ def get_inventory():
     )
 
 
+@store_api.route("/api/v1/store/order", methods=['POST'])
+@auth.login_required(role=["customer", "pharmacist"])
+def create_order():
+    order_data = request.get_json()
+    if order_data is None:
+        return Response("Invalid request body!", status=400)
+    try:
+        order = Order(**order_data)
+        order.customer_id = auth.current_user().id
+        session.add(order)
+        session.commit()
+    except IntegrityError:
+        return Response("Create failed", status=402)
+    return Response("Order was created", status=200)
+
+
 @store_api.route("/api/v1/store/order/medicine", methods=['POST'])
+@auth.login_required(role=["customer", "pharmacist"])
 def add_medicine_to_order():
     order_medicine_data = request.get_json()
     if order_medicine_data is None:
@@ -51,9 +56,13 @@ def add_medicine_to_order():
         return Response('Medicine not found', 404)
     order = session.query(Order)
     current_order = order.get(int(order_medicine_data['order_id']))
+    if current_order.customer_id != auth.current_user().id and \
+            auth.current_user().role != roles.pharmacist:
+        return Response("Access forbidden, not your order", status=403)
     if current_order is None:
         return Response('Order not found', 404)
-    order_medicine = Order_Medicine(medicine_id=order_medicine_data['medicine_id'], order_id=order_medicine_data['order_id'])
+    order_medicine = Order_Medicine(medicine_id=order_medicine_data['medicine_id'],
+                                    order_id=order_medicine_data['order_id'])
     session.add(order_medicine)
     try:
         session.commit()
@@ -63,6 +72,7 @@ def add_medicine_to_order():
 
 
 @store_api.route("/api/v1/store/order/<orderId>/getMedicines", methods=['GET'])
+@auth.login_required(role=["customer", "pharmacist"])
 def get_order_items(orderId):
     current_order = session.query(Order).get(int(orderId))
     if current_order is None:
@@ -82,18 +92,25 @@ def get_order_items(orderId):
 
 
 @store_api.route("/api/v1/store/order/<orderId>", methods=['GET'])
+@auth.login_required(role=["customer", "pharmacist"])
 def get_order(orderId):
-    current_order = session.query(Order).get(int(orderId))
-    if current_order is None:
-        return Response('Order not found', 404)
-    return Response(
-        response=json.dumps(current_order.to_dict(), cls=AlchemyEncoder),
-        status=200,
-        mimetype='application/json'
-    )
+    with Session.begin() as session:
+        current_order = session.query(Order).get(int(orderId))
+        if current_order is None:
+            return Response('Order not found', 404)
+        if current_order.customer_id != auth.current_user().id and \
+                auth.current_user().role != roles.pharmacist:
+            return Response("Access forbidden, not your order", status=403)
+
+        return Response(
+            response=json.dumps(current_order.to_dict(), cls=AlchemyEncoder),
+            status=200,
+            mimetype='application/json'
+        )
 
 
 @store_api.route("/api/v1/store/order/<orderId>", methods=['DELETE'])
+@auth.login_required(role="pharmacist")
 def delete_order(orderId):
     order = session.query(Order)
     current_order = order.get(int(orderId))
@@ -108,6 +125,7 @@ def delete_order(orderId):
 
 
 @store_api.route("/api/v1/store/order/<orderId>/<medicineId>", methods=['DELETE'])
+@auth.login_required(role="pharmacist")
 def delete_medicine_from_order(orderId, medicineId):
     order_medicine = session.query(Order_Medicine)
     current_event = order_medicine.filter_by(order_id=int(orderId), medicine_id=int(medicineId)).first()

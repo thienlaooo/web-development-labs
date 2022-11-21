@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import IntegrityError
 from Models.Models import Medicine
+from api.Auth import auth
 from api.Encoder import AlchemyEncoder
 
 engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
@@ -14,6 +15,7 @@ medicine_api = Blueprint('medicine_api', __name__)
 
 
 @medicine_api.route("/api/v1/medicine", methods=['POST'])
+@auth.login_required(role="pharmacist")
 def create_medicine():
     medicine_data = request.get_json()
     if medicine_data is None:
@@ -45,6 +47,7 @@ def get_medicine(medicineId):
 
 
 @medicine_api.route("/api/v1/medicine", methods=['PUT'])
+@auth.login_required(role="pharmacist")
 def update_medicine():
     medicine_data = request.get_json()
     if medicine_data is None:
@@ -61,6 +64,7 @@ def update_medicine():
 
 
 @medicine_api.route("/api/v1/medicine/<medicineId>", methods=['DELETE'])
+@auth.login_required(role="pharmacist")
 def delete_medicine(medicineId):
     medicine = session.query(Medicine)
     currentMedicine = medicine.get(int(medicineId))
@@ -75,6 +79,7 @@ def delete_medicine(medicineId):
 
 
 @medicine_api.route("/api/v1/medicine/addInDemand", methods=['POST'])
+@auth.login_required(role=["customer", "pharmacist"])
 def add_in_demand_medicine():
     demand_data = request.get_json()
     if demand_data is None:
@@ -92,6 +97,7 @@ def add_in_demand_medicine():
 
 
 @medicine_api.route("/api/v1/medicine/<medicineId>/uploadImage", methods=['POST'])
+@auth.login_required(role="pharmacist")
 def add_photos_to_medicine(medicineId):
     photos_data = request.get_json()
     if photos_data is None:

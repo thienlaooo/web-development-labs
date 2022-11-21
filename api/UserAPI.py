@@ -1,3 +1,5 @@
+import base64
+
 from flask import Flask, Blueprint, Response, request, jsonify, json
 import json
 import bcrypt
@@ -6,6 +8,8 @@ from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
 from Models.Models import User
 from Encoder import AlchemyEncoder
+from api.Auth import auth
+
 engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -27,6 +31,7 @@ def create_user():
 
 
 @user_api.route("/api/v1/user/<userId>", methods=['GET'])
+@auth.login_required(role='pharmacist')
 def get_user(userId):
     user = session.query(User)
     currentUser = user.get(int(userId))
@@ -40,6 +45,7 @@ def get_user(userId):
 
 
 @user_api.route("/api/v1/user/<userId>", methods=['DELETE'])
+@auth.login_required(role='pharmacist')
 def delete_user(userId):
     user = session.query(User)
     currentUser = user.get(int(userId))
@@ -54,11 +60,12 @@ def delete_user(userId):
 
 
 @user_api.route("/api/v1/user", methods=['PUT'])
+@auth.login_required(role=['customer', 'pharmacist'])
 def update_user():
     user_data = request.get_json()
     if user_data is None:
         return Response("Invalid request body!", status=400)
-    if 'id' in user_data:
+    if 'id' in user_data and auth.current_user().id == int(user_data['id']):
         try:
             user = User(**user_data)
             session.query(User).filter(User.id == user.id).update(user_data, synchronize_session="fetch")
@@ -78,8 +85,9 @@ def login_user():
         if 'password' in data and 'email' in data:
             user = session.query(User).filter_by(email=data['email']).first()
             if not bcrypt.checkpw(data['password'].encode("utf-8"), user.password.encode("utf-8")):
-                return Response("Invalid password or email specified", status=404)
-            return Response(json.dumps(user.to_dict()), status=200)
+                return Response("Invalid password", status=404)
+            token = base64.encodebytes(f"{data['email']}:{data['password']}".encode('utf-8'))
+            return jsonify({'basic': token.decode("utf-8").replace("\n", "")}), 200
     except IntegrityError:
         return Response("Invalid email or password specified", status=400)
     return Response("Invalid request body!", status=400)
