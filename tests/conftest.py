@@ -1,5 +1,5 @@
 import pytest
-from Models.Models import User, Medicine, Order, Order_Medicine
+from Models.Models import User, Medicine, Order, Order_Medicine, Base
 from app import create_app
 
 
@@ -23,3 +23,5 @@ def new_client():
 
     with flask_app.test_client() as testing_client:
         yield testing_client
+
+

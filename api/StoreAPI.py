@@ -4,7 +4,6 @@ from psycopg2 import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
 from Models.Models import Order, Medicine, Order_Medicine, roles
-from api.Encoder import AlchemyEncoder
 from api.Auth import auth
 
 engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
@@ -22,7 +21,7 @@ def get_inventory():
     for medicine in medicines:
         medicinesJson.append(medicine.to_dict())
     return Response(
-        response=json.dumps(medicinesJson, cls=AlchemyEncoder),
+        response=json.dumps(medicinesJson),
         status=200,
         mimetype='application/json'
     )
@@ -31,8 +30,9 @@ def get_inventory():
 @store_api.route("/api/v1/store/order", methods=['POST'])
 @auth.login_required(role=["customer", "pharmacist"])
 def create_order():
-    order_data = request.get_json()
-    if order_data is None:
+    try:
+        order_data = request.get_json()
+    except:
         return Response("Invalid request body!", status=400)
     try:
         order = Order(**order_data)
@@ -85,7 +85,7 @@ def get_order_items(orderId):
     for medicine in medicines:
         response_json.append(medicine.medicine.to_dict())
     return Response(
-        response=json.dumps(response_json, cls=AlchemyEncoder),
+        response=json.dumps(response_json),
         status=200,
         mimetype='application/json'
     )
@@ -103,7 +103,7 @@ def get_order(orderId):
             return Response("Access forbidden, not your order", status=403)
 
         return Response(
-            response=json.dumps(current_order.to_dict(), cls=AlchemyEncoder),
+            response=json.dumps(current_order.to_dict()),
             status=200,
             mimetype='application/json'
         )

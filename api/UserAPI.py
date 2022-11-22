@@ -7,7 +7,6 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
 from Models.Models import User
-from api.Encoder import AlchemyEncoder
 from api.Auth import auth
 
 engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
@@ -18,15 +17,17 @@ user_api = Blueprint('user_api', __name__)
 
 @user_api.route("/api/v1/user", methods=['POST'])
 def create_user():
-    user_data = request.get_json()
-    if user_data is None:
+    try:
+        user_data = request.get_json()
+    except:
         return Response("Invalid request body!", status=400)
+
     try:
         user = User(**user_data)
         session.add(user)
         session.commit()
     except IntegrityError:
-        return Response("Create failed", status=402)
+        return Response("Create failed", status=400)
     return Response("User was created", status=200)
 
 
@@ -38,7 +39,7 @@ def get_user(userId):
     if currentUser is None:
         return Response("User doesn't exist", status=404)
     return Response(
-          response=json.dumps(currentUser.to_dict(), cls=AlchemyEncoder),
+          response=json.dumps(currentUser.to_dict()),
           status=200,
           mimetype='application/json'
       )
@@ -55,7 +56,7 @@ def delete_user(userId):
         session.delete(currentUser)
         session.commit()
     except IntegrityError:
-        return Response("Delete failed", status=402)
+        return Response("Delete failed", status=400)
     return Response("User was deleted", status=200)
 
 
@@ -71,15 +72,16 @@ def update_user():
             session.query(User).filter(User.id == user.id).update(user_data, synchronize_session="fetch")
             session.commit()
         except IntegrityError:
-            return Response("Update failed", status=402)
+            return Response("Update failed", status=400)
         return Response("User was updated", status=200)
     return Response("Invalid request body!", status=400)
 
 
 @user_api.route("/api/v1/user/login", methods=['GET'])
 def login_user():
-    data = request.get_json()
-    if data is None:
+    try:
+        data = request.get_json()
+    except:
         return Response("Invalid request body!", status=400)
     try:
         if 'password' in data and 'email' in data:
@@ -88,6 +90,5 @@ def login_user():
                 return Response("Invalid password", status=404)
             token = base64.encodebytes(f"{data['email']}:{data['password']}".encode('utf-8'))
             return jsonify({'basic': token.decode("utf-8").replace("\n", "")}), 200
-    except IntegrityError:
+    except:
         return Response("Invalid email or password specified", status=400)
-    return Response("Invalid request body!", status=400)
