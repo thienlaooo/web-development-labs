@@ -13,14 +13,14 @@ def test_create_medicine(new_client):
     response = new_client.post("/api/v1/medicine", data=json.dumps(request_body),
                                auth=("pharm@gmail.com", "123qwerty"), headers={'Content-Type': 'application/json'})
     assert response.status_code == 200
-    assert b"Medicine was created" in response.response
+    assert b"Medicine was created" in response.data
 
 
 def test_create_empty_medicine(new_client):
     response = new_client.post("/api/v1/medicine", auth=("pharm@gmail.com", "123qwerty"),
                                headers={'Content-Type': 'application/json'})
     assert response.status_code == 400
-    assert b"Invalid request body!" in response.response
+    assert b"Invalid request body!" in response.data
 
 
 def test_create_same_medicine(new_client):
@@ -35,7 +35,7 @@ def test_create_same_medicine(new_client):
     response = new_client.post("/api/v1/medicine", data=json.dumps(request_body),
                                auth=("pharm@gmail.com", "123qwerty"), headers={'Content-Type': 'application/json'})
     assert response.status_code == 400
-    assert b"Medicine already exists" in response.response
+    assert b"Medicine already exists" in response.data
 
 
 def test_get_medicine_by_id(new_client):
@@ -48,7 +48,7 @@ def test_get_medicine_by_id(new_client):
 def test_get_medicine_by_wrong_id(new_client):
     response = new_client.get("/api/v1/medicine/8")
     assert response.status_code == 404
-    assert b"Medicine doesn't exist" in response.response
+    assert b"Medicine doesn't exist" in response.data
 
 
 def test_edit_medicine(new_client):
@@ -60,7 +60,7 @@ def test_edit_medicine(new_client):
     response = new_client.put("/api/v1/medicine", data=json.dumps(request_body),
                               auth=("pharm@gmail.com", "123qwerty"), headers={'Content-Type': 'application/json'})
     assert response.status_code == 200
-    assert b"Medicine was updated" in response.response
+    assert b"Medicine was updated" in response.data
 
 
 def test_edit_empty_medicine(new_client):
@@ -77,14 +77,14 @@ def test_add_in_demand(new_client):
     response = new_client.post("/api/v1/medicine/addInDemand", data=json.dumps(request_body),
                                auth=("pharm@gmail.com", "123qwerty"), headers={'Content-Type': 'application/json'})
     assert response.status_code == 200
-    assert b"Medicine was added in demand" in response.response
+    assert b"Medicine was added in demand" in response.data
 
 
 def test_add_empty_in_demand(new_client):
     response = new_client.post("/api/v1/medicine/addInDemand", auth=("pharm@gmail.com", "123qwerty"),
                                headers={'Content-Type': 'application/json'})
     assert response.status_code == 400
-    assert b"Invalid request body!" in response.response
+    assert b"Invalid request body!" in response.data
 
 
 def test_add_wrong_in_demand(new_client):
@@ -94,7 +94,7 @@ def test_add_wrong_in_demand(new_client):
     response = new_client.post("/api/v1/medicine/addInDemand", data=json.dumps(request_body),
                                auth=("pharm@gmail.com", "123qwerty"), headers={'Content-Type': 'application/json'})
     assert response.status_code == 404
-    assert b"Medicine doesn't exist" in response.response
+    assert b"Medicine doesn't exist" in response.data
 
 
 def test_add_photos(new_client):
@@ -104,7 +104,7 @@ def test_add_photos(new_client):
     response = new_client.post("/api/v1/medicine/5/uploadImage", data=json.dumps(request_body),
                                auth=("pharm@gmail.com", "123qwerty"), headers={'Content-Type': 'application/json'})
     assert response.status_code == 200
-    assert b"Photo was successfully added" in response.response
+    assert b"Photo was successfully added" in response.data
 
 
 def test_add_empty_photos(new_client):
@@ -121,19 +121,19 @@ def test_add_photos_to_wrong_medicine(new_client):
     response = new_client.post("/api/v1/medicine/10/uploadImage", data=json.dumps(request_body),
                                auth=("pharm@gmail.com", "123qwerty"), headers={'Content-Type': 'application/json'})
     assert response.status_code == 404
-    assert b"Medicine doesn't exist" in response.response
+    assert b"Medicine doesn't exist" in response.data
 
 
 def test_delete_medicine(new_client):
     response = new_client.delete("/api/v1/medicine/5", auth=("pharm@gmail.com", "123qwerty"))
     assert response.status_code == 200
-    assert b"Medicine was deleted" in response.response
+    assert b"Medicine was deleted" in response.data
 
 
 def test_delete_wrong_medicine(new_client):
     response = new_client.delete("/api/v1/medicine/8", auth=("pharm@gmail.com", "123qwerty"))
     assert response.status_code == 404
-    assert b"Medicine doesn't exist" in response.response
+    assert b"Medicine doesn't exist" in response.data
 
 
 def test_create_medicine_same_id(new_client):
@@ -148,4 +148,4 @@ def test_create_medicine_same_id(new_client):
     response = new_client.post("/api/v1/medicine", data=json.dumps(request_body),
                                auth=("pharm@gmail.com", "123qwerty"), headers={'Content-Type': 'application/json'})
     assert response.status_code == 400
-    assert b"Create failed" in response.response
+    assert b"Create failed" in response.data

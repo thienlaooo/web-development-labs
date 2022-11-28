@@ -26,7 +26,7 @@ def test_add_user(new_client):
     response = new_client.post("/api/v1/user", data=json.dumps(request_body),
                                headers={'Content-Type': 'application/json'})
     assert response.status_code == 200
-    assert b'User was created' in response.response
+    assert b'User was created' in response.data
 
 
 def test_edit_user(new_client):
@@ -37,25 +37,25 @@ def test_edit_user(new_client):
     response = new_client.put("/api/v1/user", data=json.dumps(request_body), auth=("vitaliy@email.com", "123qwerty"),
                               headers={'Content-Type': 'application/json'})
     assert response.status_code == 200
-    assert b"User was updated" in response.response
+    assert b"User was updated" in response.data
 
 
 def test_get_user_with_id_unathorized(new_client):
     response = new_client.get("/api/v1/user/3", auth=("johhhn@email.com", "123qwerty"))
     assert response.status_code == 403
-    assert b'Unauthorized Access' in response.response
+    assert b'Unauthorized Access' in response.data
 
 
 def test_delete_user(new_client):
     response = new_client.delete("/api/v1/user/30", auth=("pharm@gmail.com", "123qwerty"))
     assert response.status_code == 200
-    assert b'User was deleted' in response.response
+    assert b'User was deleted' in response.data
 
 
 def test_delete_user_wrong_id(new_client):
     response = new_client.delete("/api/v1/user/40", auth=("pharm@gmail.com", "123qwerty"))
     assert response.status_code == 404
-    assert b"User doesn't exist" in response.response
+    assert b"User doesn't exist" in response.data
 
 
 def test_get_user_with_invalid_id(new_client):
@@ -87,7 +87,7 @@ def test_login_invalid_password(new_client):
     }
     response = new_client.get("/api/v1/user/login", data=json.dumps(request_body), headers={'Content-Type': 'application/json'})
     assert response.status_code == 404
-    assert b"Invalid password" in response.response
+    assert b"Invalid password" in response.data
 
 
 def test_login_invalid_data(new_client):
@@ -97,13 +97,13 @@ def test_login_invalid_data(new_client):
     }
     response = new_client.get("/api/v1/user/login", data=json.dumps(request_body), headers={'Content-Type': 'application/json'})
     assert response.status_code == 400
-    assert b"Invalid email or password specified" in response.response
+    assert b"Invalid email or password specified" in response.data
 
 
 def test_empty_login(new_client):
     response = new_client.get("/api/v1/user/login", headers={'Content-Type': 'application/json'})
     assert response.status_code == 400
-    assert b"Invalid request body!" in response.response
+    assert b"Invalid request body!" in response.data
 
 
 def test_add_same_user(new_client):
@@ -119,4 +119,4 @@ def test_add_same_user(new_client):
     response = new_client.post("/api/v1/user", data=json.dumps(request_body),
                                headers={'Content-Type': 'application/json'})
     assert response.status_code == 400
-    assert b'Create failed' in response.response
+    assert b'Create failed' in response.data
