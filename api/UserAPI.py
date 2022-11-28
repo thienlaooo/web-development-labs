@@ -6,7 +6,7 @@ import bcrypt
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
-from Models.Models import User
+from Models.Models import User, roles
 from api.Auth import auth
 
 engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
@@ -66,14 +66,17 @@ def update_user():
     user_data = request.get_json()
     if user_data is None:
         return Response("Invalid request body!", status=400)
-    if 'id' in user_data and auth.current_user().id == int(user_data['id']):
-        try:
-            user = User(**user_data)
-            session.query(User).filter(User.id == user.id).update(user_data, synchronize_session="fetch")
-            session.commit()
-        except IntegrityError:
-            return Response("Update failed", status=400)
-        return Response("User was updated", status=200)
+    if 'id' in user_data and auth.current_user().id == int(user_data['id']) or auth.current_user().role == roles.pharmacist:
+        if auth.current_user().role != roles.pharmacist and "role" in user_data:
+            return Response("Only pharmacist can change a role of user!", status=403)
+        else:
+            try:
+                user = User(**user_data)
+                session.query(User).filter(User.id == user.id).update(user_data, synchronize_session="fetch")
+                session.commit()
+            except IntegrityError:
+                return Response("Update failed", status=400)
+            return Response("User was updated", status=200)
     return Response("Invalid request body!", status=400)
 
 

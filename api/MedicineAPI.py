@@ -93,7 +93,7 @@ def add_in_demand_medicine():
         session.query(Medicine).filter(Medicine.id == demand_data["medicine"]).update({"inDemand": True}, synchronize_session="fetch")
         session.commit()
     except IntegrityError:
-        return Response("Add in demand failed", status=402)
+        return Response("Add in demand failed", status=400)
     return Response("Medicine was added in demand", status=200)
 
 

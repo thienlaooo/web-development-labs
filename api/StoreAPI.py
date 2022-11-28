@@ -81,7 +81,6 @@ def get_order_items(orderId):
     response_json = []
     if medicines is None:
         return Response("Medicines not found", status=404)
-    # response_json.append(current_order.to_dict())
     for medicine in medicines:
         response_json.append(medicine.medicine.to_dict())
     return Response(
@@ -125,7 +124,7 @@ def delete_order(orderId):
 
 
 @store_api.route("/api/v1/store/order/<orderId>/<medicineId>", methods=['DELETE'])
-@auth.login_required(role="pharmacist")
+@auth.login_required(role=["customer", "pharmacist"])
 def delete_medicine_from_order(orderId, medicineId):
     order_medicine = session.query(Order_Medicine)
     current_event = order_medicine.filter_by(order_id=int(orderId), medicine_id=int(medicineId)).first()
