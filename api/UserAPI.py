@@ -21,7 +21,8 @@ def create_user():
         user_data = request.get_json()
     except:
         return {"message": "Invalid request body!"}, 400
-
+    if user_data["role"] == roles.pharmacist.value:
+        return {"message": "Can't create a user as pharmacist"}, 403
     try:
         user = User(**user_data)
         session.add(user)
