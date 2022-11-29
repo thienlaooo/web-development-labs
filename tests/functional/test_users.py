@@ -21,12 +21,23 @@ def test_add_user(new_client):
         "password": "123qwerty",
         "phone": "380987345126",
         "email": "vitaliy@email.com",
-        "role": "pharmacist"
+        "role": "customer"
     }
     response = new_client.post("/api/v1/user", data=json.dumps(request_body),
                                headers={'Content-Type': 'application/json'})
     assert response.status_code == 200
     assert b'User was created' in response.data
+
+
+def test_change_user_role(new_client):
+    request_body = {
+        "id": 30,
+        "role": "pharmacist"
+    }
+    response = new_client.put("/api/v1/user", data=json.dumps(request_body), auth=("pharm@gmail.com", "123qwerty"),
+                              headers={'Content-Type': 'application/json'})
+    assert response.status_code == 200
+    assert b"User was updated" in response.data
 
 
 def test_edit_user(new_client):
@@ -114,7 +125,7 @@ def test_add_same_user(new_client):
         "password": "123qwerty",
         "phone": "380987345126",
         "email": "vitaliy@email.com",
-        "role": "pharmacist"
+        "role": "customer"
     }
     response = new_client.post("/api/v1/user", data=json.dumps(request_body),
                                headers={'Content-Type': 'application/json'})

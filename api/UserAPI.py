@@ -22,7 +22,7 @@ def create_user():
     except:
         return {"message": "Invalid request body!"}, 400
     if user_data["role"] == roles.pharmacist.value:
-        return {"message": "Can't create a user as pharmacist"}, 403
+        return {"message": "Can't create a user as pharmacist"}, 400
     try:
         user = User(**user_data)
         session.add(user)
