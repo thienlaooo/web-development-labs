@@ -8,7 +8,7 @@ from Models.Models import User
 
 auth_bp = Blueprint('auth', __name__)
 auth = HTTPBasicAuth()
-engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
+engine = create_engine("postgresql://postgres:postgres@localhost:5432/pharmacy")
 Session = sessionmaker(bind=engine)
 user_session = Session()
 

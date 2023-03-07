@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from Models.Models import User, roles
 from api.Auth import auth
 
-engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
+engine = create_engine("postgresql://postgres:postgres@localhost:5432/pharmacy")
 Session = sessionmaker(bind=engine)
 session = Session()
 user_api = Blueprint('user_api', __name__)

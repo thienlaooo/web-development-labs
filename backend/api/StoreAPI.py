@@ -1,18 +1,21 @@
 from flask import Flask, Blueprint, Response, request, jsonify, json
 import json
+
+from flask_cors import cross_origin
 from psycopg2 import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
 from Models.Models import Order, Medicine, Order_Medicine, roles
 from api.Auth import auth
 
-engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
+engine = create_engine("postgresql://postgres:postgres@localhost:5432/pharmacy")
 Session = sessionmaker(bind=engine)
 session = Session()
 store_api = Blueprint('store_api', __name__)
 
 
 @store_api.route("/api/v1/store/inventory", methods=['GET'])
+@cross_origin(origins=['http://localhost:5000'])
 def get_inventory():
     medicines = session.query(Medicine).all()
     medicinesJson = []
