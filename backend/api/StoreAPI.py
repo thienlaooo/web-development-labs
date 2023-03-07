@@ -15,7 +15,6 @@ store_api = Blueprint('store_api', __name__)
 
 
 @store_api.route("/api/v1/store/inventory", methods=['GET'])
-@cross_origin(origins=['http://localhost:5000'])
 def get_inventory():
     medicines = session.query(Medicine).all()
     medicinesJson = []
