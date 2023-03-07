@@ -5,8 +5,8 @@ from flask_cors import cross_origin
 from psycopg2 import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
-from Models.Models import Order, Medicine, Order_Medicine, roles
-from api.Auth import auth
+from backend.Models.Models import Order, Medicine, Order_Medicine, roles
+from backend.api.Auth import auth
 
 engine = create_engine("postgresql://postgres:postgres@localhost:5432/pharmacy")
 Session = sessionmaker(bind=engine)
