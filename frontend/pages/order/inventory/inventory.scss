@@ -1,0 +1,191 @@
+$primary-color: #008000;
+$secondary-color: #ffffff;
+$bg-color: #f0f0f0;
+
+body {
+  background: url("../../../assets/images/pharmacy.jpg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+}
+
+header {
+  background-color: $primary-color;
+  padding: 10px;
+}
+
+nav {
+  background-color: $secondary-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.search-bar form {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input[type="text"] {
+  border: none;
+  border-radius: 20px;
+  padding: 10px 15px;
+  margin-right: 10px;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar button[type="submit"] {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.search-bar button[type="submit"]:hover {
+  color: #999;
+}
+
+.fa-search {
+  font-size: 18px;
+  color: #666;
+}
+
+.logo a {
+  color: $primary-color;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 35px;
+  height: 35px;
+}
+
+
+.menu-toggle {
+  display: none;
+
+  span {
+    background-color: $primary-color;
+    display: block;
+    height: 3px;
+    margin-bottom: 5px;
+    position: relative;
+    transition: background-color 300ms ease-in-out;
+
+    &:before, &:after {
+      background-color: $primary-color;
+      content: "";
+      display: block;
+      height: 100%;
+      position: absolute;
+      transition: transform 300ms ease-in-out;
+      width: 100%;
+    }
+
+    &:before {
+      top: 10px;
+    }
+
+    &:after {
+      top: -10px;
+    }
+  }
+}
+
+.menu-toggle input[type="checkbox"] {
+  display: none;
+
+  &:checked ~ .menu {
+    display: block;
+  }
+
+  &:checked ~ .menu-toggle > span {
+    background-color: transparent;
+
+    &:before {
+      transform: rotate(-45deg);
+    }
+
+    &:after {
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    li {
+      margin-left: 20px;
+
+      a {
+        color: $primary-color;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 10px;
+        transition: background-color 300ms ease-in-out;
+
+        &:hover {
+          background-color: $primary-color;
+          color: $secondary-color;
+        }
+      }
+    }
+  }
+}
+
+.store-inventory {
+  margin: auto;
+  max-width: 800px;
+  padding: 20px;
+  background-color: $secondary-color;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    color: $primary-color;
+    text-align: center;
+    margin-top: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: $primary-color;
+      color: $secondary-color;
+    }
+
+    tr:nth-child(even) {
+      background-color: $bg-color;
+    }
+  }
+}
