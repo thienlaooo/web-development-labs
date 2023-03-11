@@ -1,0 +1,55 @@
+body {
+  background-color: #f7f7f7;
+}
+
+.user-profile {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: "Roboto", sans-serif;
+}
+
+.profile-header {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.profile-name {
+  margin-top: 10px;
+  font-size: 36px;
+}
+
+.profile-bio {
+  font-size: 18px;
+  font-style: italic;
+}
+
+.profile-body {
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #388E3C;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+/*# sourceMappingURL=user.css.map */
