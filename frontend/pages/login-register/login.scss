@@ -2,6 +2,9 @@ $primary-color: rgb(40, 145, 124);
 $secondary-color: #ffffff;
 $third-color: #000000;
 $bg-color: #f0f0f0;
+$invalid-color: #F44336;
+$glow-color: #ff4c4c;
+
 
 body {
   display: flex;
@@ -49,6 +52,12 @@ body {
     border-radius: 5px;
     margin-top: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+    &:invalid:not(:placeholder-shown):focus {
+      border: 2px solid $invalid-color;
+      box-shadow: 0 0 7px $invalid-color;
+    }
+
   }
 
   button[type="submit"] {

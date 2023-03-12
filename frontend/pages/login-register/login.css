@@ -42,6 +42,10 @@ body {
   margin-top: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+.login-form input:invalid:not(:placeholder-shown):focus {
+  border: 2px solid #F44336;
+  box-shadow: 0 0 7px #F44336;
+}
 .login-form button[type=submit] {
   display: block;
   margin-top: 20px;

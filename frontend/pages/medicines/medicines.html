@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicines inventory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/frontend/pages/home/home.css">
+    <link rel="stylesheet" href="medicines.css">
+
+</head>
+<body>
+<header>
+    <nav>
+        <a href="#" class="logo"><img src="/frontend/assets/images/medicine-wellness-icon.png" alt="Pharmacy Logo"></a>
+        <div class="burger-icon">&#9776;</div>
+        <ul>
+            <li><a href="#">Medicines</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for medicines">
+            <button>Search</button>
+        </div>
+        <div class="user-nav">
+            <a href="#">Login</a>
+            <a href="#" class="cart-icon"><img src="/frontend/assets/images/shopping-cart-icon.png" alt="Cart Icon"></a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="sorting">
+        <h2>Sort By</h2>
+        <label for="sort"></label>
+        <select id="sort">
+            <option value="all">All</option>
+            <option value="highLow">Price High to Low</option>
+            <option value="lowHigh">Price Low to High</option>
+            <option value="AZ">Name A to Z</option>
+            <option value="ZA">Name Z to A</option>
+        </select>
+    </section>
+
+    <section class="filters">
+        <h2>Filters</h2>
+        <div class="filter-option">
+            <label for="type">Type:</label>
+            <select id="type">
+                <option value="all">All</option>
+                <option value="tablet">Tablet</option>
+                <option value="capsule">Capsule</option>
+                <option value="syrup">Syrup</option>
+            </select>
+        </div>
+        <div class="filter-option">
+            <label for="brand">Brand:</label>
+            <select id="brand">
+                <option value="all">All</option>
+                <option value="brand1">Brand 1</option>
+                <option value="brand2">Brand 2</option>
+                <option value="brand3">Brand 3</option>
+            </select>
+        </div>
+        <div>
+            <label for="price-range">Price Range:</label>
+            <input type="range" name="price-range" id="price-range" min="0" max="100" step="1">
+            <output for="price-range" id="price-output">$50 - $100</output>
+        </div>
+        <div>
+            <button type="submit">Apply Filters</button>
+            <button type="reset">Reset Filters</button>
+        </div>
+    </section>
+    <!-- Your main content goes here -->
+<!--    <section class="filters">-->
+<!--        <h2>Filters</h2>-->
+<!--        <form>-->
+<!--            <div>-->
+<!--                <label for="category">Category:</label>-->
+<!--                <select name="category" id="category">-->
+<!--                    <option value="">All</option>-->
+<!--                    <option value="painkillers">Painkillers</option>-->
+<!--                    <option value="cold-and-flu">Cold and Flu</option>-->
+<!--                    <option value="vitamins-and-supplements">Vitamins and Supplements</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <label for="price-range">Price Range:</label>-->
+<!--                <input type="range" name="price-range" id="price-range" min="0" max="100" step="1">-->
+<!--                <output for="price-range" id="price-output">$50 - $100</output>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <button type="submit">Apply Filters</button>-->
+<!--                <button type="reset">Reset Filters</button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </section>-->
+    <section class="medicines">
+        <h2>Medicines</h2>
+        <div class="medicine-list">
+            <div class="medicine-item">
+                <img src="/frontend/assets/images/medicine1.jpeg" alt="Medicine 1">
+                <h3>Medicine 1</h3>
+                <p>$10.99</p>
+                <button>Buy Now</button>
+            </div>
+            <div class="medicine-item">
+                <img src="/frontend/assets/images/medicine2.jpeg" alt="Medicine 2">
+                <h3>Medicine 2</h3>
+                <p>$15.99</p>
+                <button>Buy Now</button>
+            </div>
+            <div class="medicine-item">
+                <img src="/frontend/assets/images/medicine3.jpeg" alt="Medicine 3">
+                <h3>Medicine 3</h3>
+                <p>$12.99</p>
+                <button>Buy Now</button>
+            </div>
+            <div class="medicine-item">
+                <img src="/frontend/assets/images/medicine3.jpeg" alt="Medicine 3">
+                <h3>Medicine 3</h3>
+                <p>$12.99</p>
+                <button>Buy Now</button>
+            </div>
+            <div class="medicine-item">
+                <img src="/frontend/assets/images/medicine3.jpeg" alt="Medicine 3">
+                <h3>Medicine 3</h3>
+                <p>$12.99</p>
+                <button>Buy Now</button>
+            </div>
+            <div class="medicine-item">
+                <img src="/frontend/assets/images/medicine3.jpeg" alt="Medicine 3">
+                <h3>Medicine 3</h3>
+                <p>$12.99</p>
+                <button>Buy Now</button>
+            </div>
+            <div class="medicine-item">
+                <img src="/frontend/assets/images/medicine3.jpeg" alt="Medicine 3">
+                <h3>Medicine 3</h3>
+                <p>$12.99</p>
+                <button>Buy Now</button>
+            </div>
+            <!-- Add more medicine items here -->
+        </div>
+    </section>
+</main>
+
+<footer>
+    <!-- Your footer content goes here -->
+</footer>
+</body>
+</html>
