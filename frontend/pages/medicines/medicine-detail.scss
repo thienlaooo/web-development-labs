@@ -24,72 +24,70 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   padding-top: 10px;
 
-  .medicine-image {
-    width: 400px;
-    height: 400px;
-    margin-right: 40px;
+}
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+.medicine-image {
+  max-width: 400px;
+  margin-right: 40px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+
+  }
+
+}
+
+.medicine-info {
+  flex: 1;
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .price {
+    font-size: 24px;
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
+
+  .description {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+  }
+
+  .quantity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 30px;
+
+    label {
+      font-size: 18px;
+      margin-right: 10px;
     }
   }
 
-  .medicine-info {
-    flex: 1;
+  button {
+    background-color: $accent-color;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    margin-right: 20px;
+    cursor: pointer;
 
-    h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .price {
-      font-size: 24px;
-      color: $accent-color;
-      margin-bottom: 20px;
-    }
-
-    .description {
-      font-size: 18px;
-      line-height: 1.5;
-      margin-bottom: 30px;
-    }
-
-    .quantity {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-bottom: 30px;
-
-      label {
-        font-size: 18px;
-        margin-right: 10px;
-      }
-
-
-    }
-
-    .add-to-cart {
-      button {
-        background-color: $accent-color;
-        color: white;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        font-size: 18px;
-        margin-right: 20px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: darken($accent-color, 10%);
-        }
-      }
+    &:hover {
+      background-color: darken($accent-color, 10%);
     }
   }
 }
