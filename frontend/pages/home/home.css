@@ -10,18 +10,21 @@ body {
   min-width: 440px;
 }
 
-header {
+main {
+  margin-top: 90px;
+}
+
+nav {
   background-color: #ffffff;
   justify-content: space-between;
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-nav {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 nav a {
   color: black;
