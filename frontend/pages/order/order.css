@@ -1,4 +1,4 @@
-@import "/frontend/pages/home/home.css";
+@import "../home/home.css";
 h1 {
   text-align: center;
   font-size: 2rem;

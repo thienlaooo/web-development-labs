@@ -1,4 +1,4 @@
-@import "/frontend/pages/home/home.css";
+@import "../home/home.css";
 .sorting {
   display: flex;
   justify-content: end;
