@@ -4,8 +4,8 @@ from flask import Flask, Blueprint, Response, request
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import IntegrityError
-from Models.Models import Medicine
-from api.Auth import auth
+from backend.Models.Models import Medicine
+from backend.api.Auth import auth
 
 engine = create_engine("postgresql://postgres:postgres@localhost:5432/pharmacy")
 Session = sessionmaker(bind=engine)

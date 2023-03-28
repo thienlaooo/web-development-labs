@@ -133,12 +133,6 @@ nav ul a {
     display: block;
   }
 }
-@media (min-width: 1400px) {
-  header {
-    padding-left: 5rem;
-    padding-right: 5rem;
-  }
-}
 .user-nav {
   display: flex;
   align-items: center;
