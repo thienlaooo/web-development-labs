@@ -96,6 +96,9 @@ nav ul a {
   justify-content: center;
   flex-wrap: wrap;
 }
+.medicines .medicine-list .medicine-item {
+  max-width: 250px;
+}
 .medicines .medicine-list .medicine-item img {
   width: 100%;
   height: auto;

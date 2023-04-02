@@ -6,80 +6,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="order.css" />
   <link rel="stylesheet" href="../home/home.css">
+  <script src="../navbar.js" defer></script>
 </head>
 <body>
 <header>
-  <nav>
-    <a href="#" class="logo">
-      <img src="../../docs/assets/images/medicine-wellness-icon.png" alt="Pharmacy Logo" />
-    </a>
-    <div class="burger-icon">&#9776;</div>
-    <ul>
-      <li><a href="#">Medicines</a></li>
-      <li><a href="#">About Us</a></li>
-      <li><a href="#">Contact Us</a></li>
-    </ul>
-    <div class="search-bar">
-      <input type="text" placeholder="Search for medicines" />
-      <button>Search</button>
-    </div>
-    <div class="user-nav">
-      <a href="#">Login</a>
-      <a href="#" class="cart-icon">
-        <img src="../../docs/assets/images/shopping-cart-icon.png" alt="Cart Icon" />
-      </a>
-    </div>
-  </nav>
+<!--  <nav>-->
+<!--    <a href="#" class="logo">-->
+<!--      <img src="../../docs/assets/images/medicine-wellness-icon.png" alt="Pharmacy Logo" />-->
+<!--    </a>-->
+<!--    <div class="burger-icon">&#9776;</div>-->
+<!--    <ul>-->
+<!--      <li><a href="#">Medicines</a></li>-->
+<!--      <li><a href="#">About Us</a></li>-->
+<!--      <li><a href="#">Contact Us</a></li>-->
+<!--    </ul>-->
+<!--    <div class="search-bar">-->
+<!--      <input type="text" placeholder="Search for medicines" />-->
+<!--      <button>Search</button>-->
+<!--    </div>-->
+<!--    <div class="user-nav">-->
+<!--      <a href="#">Login</a>-->
+<!--      <a href="#" class="cart-icon">-->
+<!--        <img src="../../docs/assets/images/shopping-cart-icon.png" alt="Cart Icon" />-->
+<!--      </a>-->
+<!--    </div>-->
+<!--  </nav>-->
 </header>
 <main>
   <h1>Order</h1>
   <div class="checkout-container">
     <div class="cart-items-container">
-      <div class="cart-item">
-        <div class="cart-item-image">
-          <img src="../../docs/assets/images/medicine1.jpeg" alt="Product 1">
-        </div>
-        <div class="cart-item-details">
-          <h3>Product 1</h3>
-          <p>Price: $10.00</p>
-          <div class="cart-item-quantity">
-            <span>Quantity:</span>
-            <select>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <div class="cart-item-image">
-          <img src="../../docs/assets/images/medicine3.jpeg" alt="Product 2">
-        </div>
-        <div class="cart-item-details">
-          <h3>Product 2</h3>
-          <p>Price: $20.00</p>
-          <div class="cart-item-quantity">
-            <span>Quantity:</span>
-            <select>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
-        </div>
-      </div>
+<!--      <div class="cart-item">-->
+<!--        <div class="cart-item-image">-->
+<!--          <img src="../../docs/assets/images/medicine1.jpeg" alt="Product 1">-->
+<!--        </div>-->
+<!--        <div class="cart-item-details">-->
+<!--          <h3>Product 1</h3>-->
+<!--          <p>Price: $10.00</p>-->
+<!--          <div class="cart-item-quantity">-->
+<!--            <span>Quantity:</span>-->
+<!--            <select>-->
+<!--              <option value="1">1</option>-->
+<!--              <option value="2">2</option>-->
+<!--              <option value="3">3</option>-->
+<!--              <option value="4">4</option>-->
+<!--              <option value="5">5</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="cart-item">-->
+<!--        <div class="cart-item-image">-->
+<!--          <img src="../../docs/assets/images/medicine3.jpeg" alt="Product 2">-->
+<!--        </div>-->
+<!--        <div class="cart-item-details">-->
+<!--          <h3>Product 2</h3>-->
+<!--          <p>Price: $20.00</p>-->
+<!--          <div class="cart-item-quantity">-->
+<!--            <span>Quantity:</span>-->
+<!--            <select>-->
+<!--              <option value="1">1</option>-->
+<!--              <option value="2">2</option>-->
+<!--              <option value="3">3</option>-->
+<!--              <option value="4">4</option>-->
+<!--              <option value="5">5</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
     </div>
     <div class="checkout-summary">
       <h3>Summary</h3>
       <div class="summary-row">
         <span>Subtotal:</span>
-        <span>$30.00</span>
+        <span id="subtotal">$30.00</span>
       </div>
       <div class="summary-row">
         <span>Shipping:</span>
@@ -92,7 +93,7 @@
       <hr>
       <div class="summary-row">
         <span>Total:</span>
-        <span>$31.50</span>
+        <span id="total">$31.50</span>
       </div>
     </div>
 
@@ -158,5 +159,47 @@
 <footer>
   <!-- Your footer content goes here -->
 </footer>
+<script>
+  const cartItemContainer = document.querySelector('.cart-items-container');
+  let sum = 0;
+  fetch(`http://127.0.0.1:5000/api/v1/store/order/${sessionStorage.getItem("order")}/getMedicines`, {
+    headers: {
+      "Authorization": "Basic " + sessionStorage.getItem("token"),
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(medicine => {
+      sum = sum + medicine.price;
+      console.log(sum);
+      const cartItem = document.createElement("div");
+      cartItem.classList.add('cart-item');
+      cartItem.innerHTML = `
+      <div class="cart-item-image">
+          <img src="${medicine.photoUrls[0]}" alt="${medicine.name}">
+      </div>
+      <div class="cart-item-details">
+        <h3>${medicine.name}</h3>
+        <p>Price: $${medicine.price}</p>
+        <div class="cart-item-quantity">
+          <span>Quantity:</span>
+          <select>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+      </div>
+      `;
+      cartItemContainer.appendChild(cartItem);
+    })
+    document.getElementById("subtotal").innerText = "$" + sum;
+    document.getElementById("total").innerText = "$" + (sum+1.50);
+  }).catch(error => console.error(error));
+  console.log(sum);
+</script>
 </body>
 </html>

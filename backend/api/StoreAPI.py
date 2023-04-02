@@ -43,7 +43,11 @@ def create_order():
         session.commit()
     except IntegrityError:
         return {"message": "Create failed"}, 400
-    return {"message": "Order was created"}, 200
+    return Response(
+        response=json.dumps(order.to_dict()),
+        status=200,
+        mimetype='application/json'
+    )
 
 
 @store_api.route("/api/v1/store/order/medicine", methods=['POST'])

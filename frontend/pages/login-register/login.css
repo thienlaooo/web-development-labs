@@ -45,7 +45,7 @@ body {
   border: 2px solid #F44336;
   box-shadow: 0 0 7px #F44336;
 }
-.login-form button[type=submit] {
+.login-form button[type=button] {
   display: block;
   margin-top: 20px;
   background-color: rgb(40, 145, 124);
@@ -56,7 +56,7 @@ body {
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
-.login-form button[type=submit]:hover {
+.login-form button[type=button]:hover {
   background-color: #1d695a;
 }
 

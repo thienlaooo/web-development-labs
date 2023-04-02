@@ -5,26 +5,27 @@
     <title>Pharmacy Website</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="home.css">
+    <script src="../navbar.js" defer></script>
 </head>
 <body>
 <header >
-    <nav >
-        <a href="#" class="logo"><img src="../../docs/assets/images/medicine-wellness-icon.png" alt="Pharmacy Logo"></a>
-        <div class="burger-icon">&#9776;</div>
-        <ul>
-            <li><a href="#">Medicines</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact Us</a></li>
-        </ul>
-        <div class="search-bar">
-            <input type="text" placeholder="Search for medicines">
-            <button>Search</button>
-        </div>
-        <div class="user-nav">
-            <a href="#">Login</a>
-            <a href="#" class="cart-icon"><img src="../../docs/assets/images/shopping-cart-icon.png" alt="Cart Icon"></a>
-        </div>
-    </nav>
+<!--    <nav >-->
+<!--        <a href="http://localhost:63342/web-development-labs/frontend/pages/home/home.html" class="logo"><img src="../../docs/assets/images/medicine-wellness-icon.png" alt="Pharmacy Logo"></a>-->
+<!--        <div class="burger-icon">&#9776;</div>-->
+<!--        <ul>-->
+<!--            <li><a href="#">Medicines</a></li>-->
+<!--            <li><a href="#">About Us</a></li>-->
+<!--            <li><a href="#">Contact Us</a></li>-->
+<!--        </ul>-->
+<!--        <div class="search-bar">-->
+<!--            <input type="text" placeholder="Search for medicines">-->
+<!--            <button>Search</button>-->
+<!--        </div>-->
+<!--        <div class="user-nav">-->
+<!--            <a href="http://localhost:63342/web-development-labs/frontend/pages/login-register/login.html" id="login-link">Login</a>-->
+<!--            <a href="#" class="cart-icon"><img src="../../docs/assets/images/shopping-cart-icon.png" alt="Cart Icon"></a>-->
+<!--        </div>-->
+<!--    </nav>-->
 </header>
 
 <main>
@@ -82,8 +83,7 @@
 <!--            </div>-->
         <div class="medicine-list">
         </div>
-            <!-- Add more medicine items here -->
-        </div>
+
     </section>
 </main>
 
@@ -92,6 +92,20 @@
 </footer>
 <script>
     const medicineList = document.querySelector('.medicine-list');
+    // const loginLink = document.getElementById('login-link');
+
+
+    // if (sessionStorage.getItem('token')) {
+    //     loginLink.textContent = 'My Account';
+    //     loginLink.href = 'http://localhost:63342/web-development-labs/frontend/pages/user/user.html'; // Update the link URL here
+    // }
+
+    function medicine_details(id){
+        console.log(id);
+        sessionStorage.setItem('id', id);
+        window.location.href = "http://localhost:63342/web-development-labs/frontend/pages/medicines/medicine-detail.html";
+
+    }
 
     fetch('http://127.0.0.1:5000/api/v1/store/inventory')
         .then(response => response.json())
@@ -100,10 +114,10 @@
                 const medicineItem = document.createElement('div');
                 medicineItem.classList.add('medicine-item');
                 medicineItem.innerHTML = `
-                    <img src="${medicine.image_url}" alt="${medicine.name}">
+                    <img src="${medicine.photoUrls[0]}" alt="${medicine.name}">
                     <h3>${medicine.name}</h3>
                     <p>$${medicine.price.toFixed(2)}</p>
-                    <button>Buy Now</button>
+                    <button type="button" onclick="medicine_details(${medicine.id})">Buy Now</button>
                 `;
                 medicineList.appendChild(medicineItem);
             });

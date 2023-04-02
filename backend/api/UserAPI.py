@@ -32,18 +32,21 @@ def create_user():
     return {"message": "User was created"}, 200
 
 
-@user_api.route("/api/v1/user/<userId>", methods=['GET'])
-@auth.login_required(role='pharmacist')
-def get_user(userId):
+@user_api.route("/api/v1/user/<email>", methods=['GET'])
+@auth.login_required(role=['customer', 'pharmacist'])
+def get_user(email):
     user = session.query(User)
-    currentUser = user.get(int(userId))
-    if currentUser is None:
-        return {"message": "User doesn't exist"}, 404
-    return Response(
-          response=json.dumps(currentUser.to_dict()),
-          status=200,
-          mimetype='application/json'
-      )
+    currentUser = user.filter_by(email=email).first()
+    if auth.current_user().id == int(currentUser.id) or auth.current_user().role == roles.pharmacist:
+        if currentUser is None:
+            return {"message": "User doesn't exist"}, 404
+        return Response(
+              response=json.dumps(currentUser.to_dict()),
+              status=200,
+              mimetype='application/json'
+          )
+    else:
+        return {"message": "No permission"}, 403
 
 
 @user_api.route("/api/v1/user/<userId>", methods=['DELETE'])
@@ -81,7 +84,7 @@ def update_user():
     return {"message": "Invalid request body!"}, 400
 
 
-@user_api.route("/api/v1/user/login", methods=['GET'])
+@user_api.route("/api/v1/user/login", methods=['POST'])
 def login_user():
     try:
         data = request.get_json()

@@ -53,6 +53,7 @@ class Medicine(Base):
 
     def to_dict(self) -> dict:
         return {
+            'id': self.id,
             'name': self.name,
             'quantity': self.quantity,
             'price': self.price,
@@ -73,6 +74,7 @@ class Order(Base):
 
     def to_dict(self) -> dict:
         return {
+            'id': self.id,
             'customer_id': self.customer_id,
             'date': str(self.date),
             'status': str(self.status)
