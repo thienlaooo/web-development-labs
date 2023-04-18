@@ -1,0 +1,10 @@
+<section class="medicines">
+  <div class="medicine-list">
+    <div *ngFor="let medicine of medicines" class="medicine-item">
+      <img src="{{medicine.photoUrls[0]}}" alt="{{medicine.name}}">
+      <h3>{{medicine.name}}</h3>
+      <p>{{medicine.price.toFixed(2)}}</p>
+      <button type="button" onclick="">Buy Now</button>
+    </div>
+  </div>
+</section>

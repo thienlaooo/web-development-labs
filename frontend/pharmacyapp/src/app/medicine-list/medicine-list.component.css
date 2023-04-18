@@ -1,0 +1,37 @@
+.medicines h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.medicines .medicine-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.medicines .medicine-list .medicine-item {
+  max-width: 250px;
+}
+.medicines .medicine-list .medicine-item img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+.medicines .medicine-list .medicine-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.medicines .medicine-list .medicine-item p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.medicines .medicine-list .medicine-item button {
+  background-color: rgb(40, 145, 124);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=medicine-list.component.css.map */

@@ -1,0 +1,44 @@
+$accent-color: rgb(40, 145, 124);
+
+.medicines {
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .medicine-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .medicine-item {
+      max-width: 250px;
+      img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 0.5rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      button {
+        background-color: $accent-color;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
