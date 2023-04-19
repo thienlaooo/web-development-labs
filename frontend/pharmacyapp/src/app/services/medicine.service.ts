@@ -27,6 +27,14 @@ export class MedicineService {
       );
   }
 
+  getMedicine(id: number): Observable<Medicine> {
+    const url = `http://127.0.0.1:5000/api/v1/medicine/${id}`
+    return this.http.get<Medicine>(url).pipe(
+      tap(_ => this.log(`fetched medicine id=${id}`)),
+      catchError(this.handleError<Medicine>(`getMedicine id=${id}`))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

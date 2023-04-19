@@ -10,6 +10,7 @@ import {AuthenticationService} from "../services/auth.service";
 })
 export class LoginComponent implements OnInit{
   form: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit{
     // get username and password from form
     this.authService.login(this.form.value['email'], this.form.value['password']).subscribe(
       token => {
+        sessionStorage.setItem("email", this.form.value['email']);
         this.router.navigate(['/home']);
       },
       error => {

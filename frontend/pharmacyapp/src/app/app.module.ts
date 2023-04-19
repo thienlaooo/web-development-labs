@@ -10,6 +10,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { LoginComponent } from './login/login.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpInterceptorService} from "./services/httpInterceptor.service";
+import { UserComponent } from './user/user.component';
+import { MedicineDetailsComponent } from './medicine-details/medicine-details.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import {HttpInterceptorService} from "./services/httpInterceptor.service";
     NavbarComponent,
     MedicineListComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    UserComponent,
+    MedicineDetailsComponent
   ],
   imports: [
     BrowserModule,

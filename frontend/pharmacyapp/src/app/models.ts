@@ -8,3 +8,16 @@ export interface Medicine {
   inDemand: boolean;
 }
 
+export interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+}
+
+export interface Order {
+  id: number;
+  customer_id: number;
+  status: string;
+}

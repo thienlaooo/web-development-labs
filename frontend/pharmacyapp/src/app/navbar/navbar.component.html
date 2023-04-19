@@ -11,6 +11,8 @@
     <button>Search</button>
   </div>
   <div class="user-nav">
-    <a routerLink="/login" id="login-link">Login</a>
+    <a routerLink="/login" *ngIf="(authService.authenticated$ | async) === false">Login</a>
+    <a routerLink="/user" *ngIf="(authService.authenticated$ | async) === true">My Account</a>
+    <a href="http://localhost:63342/web-development-labs/frontend/pages/order/order.html" class="cart-icon" *ngIf="(authService.authenticated$ | async) === true"><img src="../../assets/images/shopping-cart-icon.png" alt="Cart Icon"></a>
   </div>
 </nav>
