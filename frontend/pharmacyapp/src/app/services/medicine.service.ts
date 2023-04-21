@@ -35,6 +35,20 @@ export class MedicineService {
     );
   }
 
+  searchMedicines(term: string, medicines: Medicine[]): Observable<Medicine[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    else {
+      const filteredMedicines = medicines.filter(medicine =>
+        medicine.name.toLowerCase().includes(term.toLowerCase())
+      );
+      // Return the filtered medicines as an Observable
+      return of(filteredMedicines);
+    }
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

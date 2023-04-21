@@ -16,7 +16,7 @@ export class UserService {
     private messageService: MessageService) { }
 
   getUser(): Observable<User>{
-    return this.http.get<User>(this.userUrl)
+    return this.http.get<User>(`http://127.0.0.1:5000/api/v1/user/${sessionStorage["email"]}`)
       .pipe(
         tap(_ => this.log('fetched user')),
         catchError(this.handleError<User>('getUser', ))

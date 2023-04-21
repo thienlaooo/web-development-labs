@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../services/auth.service";
+import {OrderService} from "../services/order.service";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,8 @@ export class LoginComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private router: Router) { }
+    private router: Router,
+    private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({     // {5}
@@ -28,12 +31,21 @@ export class LoginComponent implements OnInit{
     this.authService.login(this.form.value['email'], this.form.value['password']).subscribe(
       token => {
         sessionStorage.setItem("email", this.form.value['email']);
+        this.orderService.createOrder();
         this.router.navigate(['/home']);
       },
       error => {
         alert("Invalid email or password");
       }
     );
+    // this.authService.login(this.form.value['email'], this.form.value['password'])
+    //   .pipe(
+    //     tap(_ => {
+    //       sessionStorage.setItem('email', this.form.value['email']);
+    //       this.orderService.createOrder();
+    //       this.router.navigate(['/home']);
+    //     })
+    //   ).subscribe();
   }
 
 

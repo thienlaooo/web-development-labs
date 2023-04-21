@@ -12,6 +12,10 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HttpInterceptorService} from "./services/httpInterceptor.service";
 import { UserComponent } from './user/user.component';
 import { MedicineDetailsComponent } from './medicine-details/medicine-details.component';
+import { AllMedicinesComponent } from './all-medicines/all-medicines.component';
+import { CartComponent } from './cart/cart.component';
+import { RegisterComponent } from './register/register.component';
+import { MedicineSearchComponent } from './medicine-search/medicine-search.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { MedicineDetailsComponent } from './medicine-details/medicine-details.co
     HomeComponent,
     LoginComponent,
     UserComponent,
-    MedicineDetailsComponent
+    MedicineDetailsComponent,
+    AllMedicinesComponent,
+    CartComponent,
+    RegisterComponent,
+    MedicineSearchComponent
   ],
   imports: [
     BrowserModule,

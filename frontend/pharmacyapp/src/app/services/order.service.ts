@@ -20,25 +20,39 @@ export class OrderService {
     private userService: UserService,
     private router: Router) { }
 
-  addMedicineToOrder(id: number): Observable<Order> {
-    if (!this.orderCreated$.value) {
-      const createOrderUrl = 'http://127.0.0.1:5000/api/v1/store/order';
-      this.userService.getUser()
-        .subscribe(user => this.user = user);
-      this.http.post<Order>(createOrderUrl, {'customer_id':this.user.id, 'status': 'placed'})
-        .pipe(tap((newOrder: Order) => {
-          sessionStorage.setItem('order', String(newOrder.id));
-          this.orderCreated$.next(true);
-          }),
-          catchError(this.handleError<Order>('addOrder')));
-    }
+  createOrder(): void {
+    const createOrderUrl = 'http://127.0.0.1:5000/api/v1/store/order';
+    this.userService.getUser()
+      .subscribe(user => {
+        this.user = user;
+        this.http.post<Order>(createOrderUrl, {'customer_id': this.user.id, 'status': 'placed'})
+          .pipe(tap((newOrder: Order) => {
+              sessionStorage.setItem('order', String(newOrder.id));
+              this.orderCreated$.next(true);
+            }),
+            catchError(this.handleError<Order>('addOrder')))
+          .subscribe(); // Add this line to subscribe to the inner observable
+      });
+  }
+
+  addMedicineToOrder(id: number): void {
     const addMedicineUrl = 'http://127.0.0.1:5000/api/v1/store/order/medicine';
-    return this.http.post<Order>(addMedicineUrl, {'order_id': sessionStorage.getItem("order"), 'medicine_id': id})
+     this.http.post<Order>(addMedicineUrl, {'order_id': sessionStorage.getItem("order"), 'medicine_id': id})
       .pipe(tap((newOrder: Order) => {
         this.log(`added hero w/ id=${newOrder.id}`);
         this.router.navigate(['/home']);
         }),
-        catchError(this.handleError<Order>('addOrder')));
+        catchError(this.handleError<Order>('addOrder')))
+     .subscribe();
+  }
+
+  getMedicinesInOrder(): Observable<Medicine[]> {
+    const medicineInOrderUrl = `http://127.0.0.1:5000/api/v1/store/order/${sessionStorage.getItem("order")}/getMedicines`;
+    return this.http.get<Medicine[]>(medicineInOrderUrl)
+      .pipe(
+        tap(_ => this.log('fetched medicines')),
+        catchError(this.handleError<Medicine[]>('getMedicines', []))
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

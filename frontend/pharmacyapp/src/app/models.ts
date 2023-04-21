@@ -14,6 +14,7 @@ export interface User {
   last_name: string;
   phone: string;
   email: string;
+  password: string;
 }
 
 export interface Order {

@@ -1,0 +1,11 @@
+<div id="search-component" class="search-bar">
+  <input #searchBox id="search-box" (input)="search(searchBox.value)" placeholder="Search for medicines" type="text"/>
+
+  <ul class="search-result">
+    <li *ngFor="let medicine of searchMedicines$ | async" >
+      <a routerLink="/detail/{{medicine.id}}">
+        {{medicine.name}}
+      </a>
+    </li>
+  </ul>
+</div>

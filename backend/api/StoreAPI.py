@@ -1,7 +1,6 @@
 from flask import Flask, Blueprint, Response, request, jsonify, json
 import json
 
-from flask_cors import cross_origin
 from psycopg2 import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
