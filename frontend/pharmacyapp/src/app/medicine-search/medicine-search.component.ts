@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap} from "rxjs";
 import {Medicine} from "../models";
 import {MedicineService} from "../services/medicine.service";
@@ -10,6 +10,7 @@ import {AuthenticationService} from "../services/auth.service";
   styleUrls: ['./medicine-search.component.scss']
 })
 export class MedicineSearchComponent implements OnInit{
+  @ViewChild('searchBox') searchBox: any;
   medicines: Medicine[];
   searchMedicines$!: Observable<Medicine[]>;
 
@@ -41,5 +42,10 @@ export class MedicineSearchComponent implements OnInit{
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.medicineService.searchMedicines(term, this.medicines)),
     );
+  }
+
+  onClick(): void {
+    this.searchTerms.next(' ');
+    this.searchBox.nativeElement.value = null;
   }
 }

@@ -22,6 +22,31 @@ export class UserService {
         catchError(this.handleError<User>('getUser', ))
       );
   }
+
+  getUsers(): Observable<User[]>{
+    return this.http.get<User[]>('http://127.0.0.1:5000/api/v1/user')
+      .pipe(
+        tap(_ => this.log('fetched users')),
+        catchError(this.handleError<User[]>('getUsers', []))
+      );
+  }
+
+  deleteUser(id: number): Observable<object> {
+    return this.http.delete<object>(`http://127.0.0.1:5000/api/v1/user/${id}`)
+      .pipe(
+        tap(resp => console.log(resp)),
+        catchError(this.handleError<object>('deleteUser', []))
+      )
+  }
+
+  makeAdmin(id: number): Observable<object> {
+    return this.http.put(`http://127.0.0.1:5000/api/v1/user`, {id: id, role: 'pharmacist'})
+      .pipe(
+        tap(resp => console.log(resp)),
+        catchError(this.handleError<object>('adminUser', []))
+      )
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

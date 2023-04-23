@@ -8,16 +8,21 @@ import {MedicineDetailsComponent} from "./medicine-details/medicine-details.comp
 import {AllMedicinesComponent} from "./all-medicines/all-medicines.component";
 import {CartComponent} from "./cart/cart.component";
 import {RegisterComponent} from "./register/register.component";
+import {UserListComponent} from "./user-list/user-list.component";
+import {AuthGuardService as AuthGuard} from "./services/auth-guard.service";
+import {NotFoundComponent} from "./not-found/not-found.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'user', component: UserComponent},
+  {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
   {path: 'detail/:id', component: MedicineDetailsComponent},
   {path: 'medicines', component:AllMedicinesComponent},
-  {path: 'cart', component:CartComponent}
+  {path: 'cart', component:CartComponent, canActivate: [AuthGuard]},
+  {path: 'user-list', component:UserListComponent, canActivate:[AuthGuard]},
+  {path: '**', component:NotFoundComponent}
 ];
 
 @NgModule({

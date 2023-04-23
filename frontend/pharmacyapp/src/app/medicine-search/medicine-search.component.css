@@ -1,47 +1,87 @@
+* {
+  box-sizing: border-box;
+}
+
 .search-bar {
+  justify-content: center;
   display: flex;
-  align-items: center;
+  z-index: 1;
 }
-.search-bar input[type=text] {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-right: 0.5rem;
+.search-bar .wrap-search {
+  max-width: 600px;
+  width: 100%;
+  height: 3rem;
+  background: #FFFFFF;
+  box-shadow: 1px 1px 1px 1px rgba(19, 22, 36, 0.1);
+  border-radius: 2rem;
+  position: relative;
+  z-index: 3;
 }
-.search-bar button {
-  background-color: rgb(40, 145, 124);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+.search-bar .wrap-search input {
+  border: 0;
+  background: 0 0;
+  color: black;
+  outline: 0;
+  flex-grow: 1;
+  line-height: 3rem;
+  width: 100%;
+  padding-left: 20px;
+}
+
+.suggestions {
+  display: block;
+  position: absolute;
+  z-index: 20;
+  background: #FFFFFF;
+  max-width: 300px;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 3rem;
+  box-sizing: border-box;
+}
+
+.search-item {
+  display: flex;
+}
+.search-item a {
+  display: flex;
+  padding: 1rem 1.5rem;
   cursor: pointer;
 }
-
-li {
-  list-style-type: none;
+.search-item .poster {
+  flex-shrink: 0;
+  width: 60px;
+  margin-right: 10px;
+  border-radius: 0.3rem;
+  overflow: hidden;
 }
-
-.search-result {
+.search-item .poster div {
+  position: relative;
+  padding-bottom: 135%;
+}
+.search-item .poster img {
+  position: absolute;
   width: 100%;
+  left: 0;
+  top: 0;
 }
-
-.search-result ul {
-  margin-top: 0;
-  padding-left: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
+.search-item .description {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
 }
-
-.search-result li a {
-  display: block;
-  padding: 0.5rem;
-  text-decoration: none;
+.search-item .description .name {
+  font-weight: 500;
   color: black;
-}
-
-.search-result li a:hover {
-  background-color: rgb(40, 145, 124);
-  color: white;
+  font-size: 1.05rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 /*# sourceMappingURL=medicine-search.component.css.map */

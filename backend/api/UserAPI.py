@@ -49,6 +49,22 @@ def get_user(email):
         return {"message": "No permission"}, 403
 
 
+@user_api.route("/api/v1/user", methods=['GET'])
+@auth.login_required(role=['pharmacist'])
+def get_users():
+    users = session.query(User).all()
+    usersJson = []
+    if users is None:
+        return {"message": "Users not found"}, 404
+    for user in users:
+        usersJson.append(user.to_dict())
+    return Response(
+        response=json.dumps(usersJson),
+        status=200,
+        mimetype='application/json'
+    )
+
+
 @user_api.route("/api/v1/user/<userId>", methods=['DELETE'])
 @auth.login_required(role='pharmacist')
 def delete_user(userId):
@@ -96,6 +112,6 @@ def login_user():
             if not bcrypt.checkpw(data['password'].encode("utf-8"), user.password.encode("utf-8")):
                 return Response("Invalid password", status=404)
             token = base64.encodebytes(f"{data['email']}:{data['password']}".encode('utf-8'))
-            return jsonify({'basic': token.decode("utf-8").replace("\n", "")}), 200
+            return jsonify({'basic': token.decode("utf-8").replace("\n", ""), 'role': user.role.value}), 200
     except:
         return {"message": "Invalid email or password specified"}, 400

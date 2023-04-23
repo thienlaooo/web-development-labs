@@ -9,8 +9,9 @@ import {OrderService} from "../services/order.service";
   templateUrl: './medicine-details.component.html',
   styleUrls: ['./medicine-details.component.scss']
 })
-export class MedicineDetailsComponent implements OnInit{
+export class MedicineDetailsComponent implements OnInit {
   medicine: Medicine;
+  id: string;
 
   constructor(
     private medicineService: MedicineService,
@@ -19,11 +20,14 @@ export class MedicineDetailsComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.getMedicine();
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      this.getMedicine();
+    });
   }
 
   getMedicine(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+    const id = parseInt(this.id!, 10);
     this.medicineService.getMedicine(id)
       .subscribe(medicine => this.medicine = medicine);
   }

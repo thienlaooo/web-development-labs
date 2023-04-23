@@ -109,7 +109,7 @@ class User(Base):
             'password': self.password,
             'phone': self.phone,
             'email': self.email,
-            'role': str(self.role)
+            'role': str(self.role.value)
         }
 
     @validates("first_name")

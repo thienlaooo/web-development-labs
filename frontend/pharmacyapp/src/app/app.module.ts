@@ -16,6 +16,9 @@ import { AllMedicinesComponent } from './all-medicines/all-medicines.component';
 import { CartComponent } from './cart/cart.component';
 import { RegisterComponent } from './register/register.component';
 import { MedicineSearchComponent } from './medicine-search/medicine-search.component';
+import { UserListComponent } from './user-list/user-list.component';
+import {AuthGuardService as AuthGuard} from "./services/auth-guard.service";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { MedicineSearchComponent } from './medicine-search/medicine-search.compo
     AllMedicinesComponent,
     CartComponent,
     RegisterComponent,
-    MedicineSearchComponent
+    MedicineSearchComponent,
+    UserListComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,8 @@ import { MedicineSearchComponent } from './medicine-search/medicine-search.compo
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true
-    }
+    },
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

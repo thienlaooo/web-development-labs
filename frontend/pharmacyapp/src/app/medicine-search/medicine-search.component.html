@@ -1,11 +1,29 @@
 <div id="search-component" class="search-bar">
-  <input #searchBox id="search-box" (input)="search(searchBox.value)" placeholder="Search for medicines" type="text"/>
+  <div class="wrap-search">
+    <input #searchBox id="search-box" (input)="search(searchBox.value)" placeholder="Search for medicines" type="text"/>
+  </div>
 
-  <ul class="search-result">
-    <li *ngFor="let medicine of searchMedicines$ | async" >
-      <a routerLink="/detail/{{medicine.id}}">
-        {{medicine.name}}
-      </a>
-    </li>
-  </ul>
+  <div class="suggestions">
+<!--    <ul class="search-result">-->
+<!--      <li *ngFor="let medicine of searchMedicines$ | async" >-->
+<!--        <a routerLink="/detail/{{medicine.id}}">-->
+<!--          {{medicine.name}}-->
+<!--        </a>-->
+<!--      </li>-->
+<!--    </ul>-->
+    <div class="search-item" *ngFor="let medicine of searchMedicines$ | async">
+        <a routerLink="/detail/{{medicine.id}}" (click)="onClick()">
+          <div class="poster">
+            <div>
+              <img src="{{medicine.photoUrls[0]}}" alt="{{medicine.name}}">
+            </div>
+          </div>
+          <div class="description">
+            <div class="name">
+              <p>{{medicine.name}}</p>
+            </div>
+          </div>
+        </a>
+    </div>
+  </div>
 </div>

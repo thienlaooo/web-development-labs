@@ -14,6 +14,7 @@
   <div class="user-nav">
     <a routerLink="/login" *ngIf="(authService.authenticated$ | async) === false">Login</a>
     <a routerLink="/user" *ngIf="(authService.authenticated$ | async) === true">My Account</a>
-    <a routerLink="/cart" class="cart-icon" *ngIf="(authService.authenticated$ | async) === true"><img src="../../assets/images/shopping-cart-icon.png" alt="Cart Icon"></a>
+    <a routerLink="/cart" class="cart-icon" *ngIf="(authService.authenticated$ | async) === true && (authService.isAdmin$ | async) === false"><img src="../../assets/images/shopping-cart-icon.png" alt="Cart Icon"></a>
+    <a routerLink="/user-list" class="cart-icon" *ngIf="(authService.authenticated$ | async) === true && (authService.isAdmin$ | async) === true"><img src="../../assets/images/person.png" alt="Person Icon"></a>
   </div>
 </nav>
