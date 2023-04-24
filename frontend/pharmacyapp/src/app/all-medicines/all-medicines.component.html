@@ -1,0 +1,48 @@
+<main>
+  <section class="sorting">
+    <h2>Sort By</h2>
+    <label for="sort"></label>
+    <select id="sort">
+      <option value="all">All</option>
+      <option value="highLow">Price High to Low</option>
+      <option value="lowHigh">Price Low to High</option>
+      <option value="AZ">Name A to Z</option>
+      <option value="ZA">Name Z to A</option>
+    </select>
+  </section>
+
+  <section class="filters">
+    <h2>Filters</h2>
+    <div class="filter-option">
+      <label for="type">Type:</label>
+      <select id="type">
+        <option value="all">All</option>
+        <option value="tablet">Tablet</option>
+        <option value="capsule">Capsule</option>
+        <option value="syrup">Syrup</option>
+      </select>
+    </div>
+    <div class="filter-option">
+      <label for="brand">Brand:</label>
+      <select id="brand">
+        <option value="all">All</option>
+        <option value="brand1">Brand 1</option>
+        <option value="brand2">Brand 2</option>
+        <option value="brand3">Brand 3</option>
+      </select>
+    </div>
+    <div>
+      <label for="price-range">Price Range:</label>
+      <input type="range" name="price-range" id="price-range" min="0" max="100" step="1">
+      <output for="price-range" id="price-output">$50 - $100</output>
+    </div>
+    <div>
+      <button type="submit">Apply Filters</button>
+      <button type="reset">Reset Filters</button>
+    </div>
+  </section>
+  <section class="medicines">
+    <h2>Medicines</h2>
+    <app-medicine-list></app-medicine-list>
+  </section>
+</main>

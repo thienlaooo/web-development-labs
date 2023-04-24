@@ -1,0 +1,27 @@
+<main>
+  <section class="medicine-details">
+    <div class="medicine-image">
+      <img src="{{medicine.photoUrls[0]}}" alt="{{medicine.name}}">
+    </div>
+    <div class="medicine-info">
+      <h1>{{medicine.name}}</h1>
+      <div class="medicine-rating">
+        <span class="star-icon">&#9733;</span>
+        <span class="star-icon">&#9733;</span>
+        <span class="star-icon">&#9733;</span>
+        <span class="star-icon">&#9733;</span>
+        <span class="star-icon">&#9733;</span>
+        <span class="rating-count">(5)</span>
+      </div>
+      <p class="medicine-info price">${{medicine.price}}</p>
+      <p class="medicine-info description">Activated Charcoal Tablets are used to treat poisonings and overdoses following oral ingestion. These tablets are also used to relieve gas and bloating.</p>
+      <ul class="medicine-features">
+        <li><span class="feature-label">Brand:</span> {{medicine.producer}}</li>
+        <li><span class="feature-label">Type:</span> Tablet</li>
+        <li><span class="feature-label">Dosage:</span> 250mg</li>
+        <li><span class="feature-label">Pack Size:</span> 10 Tablets</li>
+      </ul>
+      <button (click)="orderService.addMedicineToOrder(medicine.id)">Add to Cart</button>
+    </div>
+  </section>
+</main>

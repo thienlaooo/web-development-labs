@@ -1,0 +1,78 @@
+body {
+  background-color: #f2f2f2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #008080;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.medicine-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.medicine-image {
+  max-width: 400px;
+  margin-right: 40px;
+}
+.medicine-image img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.medicine-info {
+  flex: 1;
+}
+.medicine-info h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+.medicine-info p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.medicine-info .price {
+  font-size: 24px;
+  color: #008080;
+  margin-bottom: 20px;
+}
+.medicine-info .description {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+.medicine-info .quantity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.medicine-info .quantity label {
+  font-size: 18px;
+  margin-right: 10px;
+}
+.medicine-info button {
+  background-color: #ff6666;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.medicine-info button:hover {
+  background-color: #ff3333;
+}
+
+/*# sourceMappingURL=medicine-detail.css.map */

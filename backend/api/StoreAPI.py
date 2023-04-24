@@ -1,18 +1,20 @@
 from flask import Flask, Blueprint, Response, request, jsonify, json
 import json
+
 from psycopg2 import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
-from Models.Models import Order, Medicine, Order_Medicine, roles
-from api.Auth import auth
+from backend.Models.Models import Order, Medicine, Order_Medicine, roles
+from backend.api.Auth import auth
 
-engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
+engine = create_engine("postgresql://postgres:postgres@localhost:5432/pharmacy")
 Session = sessionmaker(bind=engine)
 session = Session()
 store_api = Blueprint('store_api', __name__)
 
 
 @store_api.route("/api/v1/store/inventory", methods=['GET'])
+@auth.login_required(role=["customer", "pharmacist"])
 def get_inventory():
     medicines = session.query(Medicine).all()
     medicinesJson = []
@@ -41,7 +43,11 @@ def create_order():
         session.commit()
     except IntegrityError:
         return {"message": "Create failed"}, 400
-    return {"message": "Order was created"}, 200
+    return Response(
+        response=json.dumps(order.to_dict()),
+        status=200,
+        mimetype='application/json'
+    )
 
 
 @store_api.route("/api/v1/store/order/medicine", methods=['POST'])

@@ -1,0 +1,36 @@
+<main *ngIf="(authService.isAdmin$ | async) === true; else notAdmin">
+  <div class="user-list">
+    <h2>Admins</h2>
+    <ul>
+      <li *ngFor="let user of admins">
+        <div class="user-info" >
+          <span class="user-name">{{ user.first_name + ' ' + user.last_name }}</span>
+          <span class="user-role">{{ user.role }}</span>
+        </div>
+      </li>
+    </ul>
+    <h2>Customers</h2>
+    <ul>
+      <li *ngFor="let user of customers">
+        <div class="user-info" >
+          <span class="user-name">{{ user.first_name + ' ' + user.last_name }}</span>
+          <span class="user-role">{{ user.role }}</span>
+        </div>
+        <div class="user-actions">
+          <button (click)="makeAdmin(user.id)" class="btn">Make Admin</button>
+          <button (click)="deleteUser(user.id)" class="btn btn-danger">Delete</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</main>
+<ng-template #notAdmin>
+  <main>
+    <div class="error">
+      <h1>403 Error - Forbidden</h1>
+      <img src="../../assets/images/sad403.png" alt="403 Error - Forbidden">
+      <p>You do not have permission to access this page.</p>
+      <button routerLink="/home">Back to Home</button>
+    </div>
+  </main>
+</ng-template>

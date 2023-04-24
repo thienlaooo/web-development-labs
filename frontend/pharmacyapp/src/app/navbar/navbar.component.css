@@ -1,0 +1,62 @@
+nav {
+  background-color: #ffffff;
+  justify-content: space-between;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+nav a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+}
+nav ul li {
+  margin-right: 1rem;
+}
+nav ul a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.burger-icon {
+  color: black;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Hide the Contact Us, Medicines, and About Us sections */
+  nav ul {
+    display: none;
+  }
+  .burger-icon {
+    display: block;
+  }
+}
+.user-nav {
+  display: flex;
+  align-items: center;
+}
+
+.user-nav a {
+  margin-left: 1rem;
+}
+
+.cart-icon img {
+  height: 30px;
+}
+
+/*# sourceMappingURL=navbar.component.css.map */

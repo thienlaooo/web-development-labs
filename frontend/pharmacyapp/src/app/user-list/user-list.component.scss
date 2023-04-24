@@ -1,0 +1,131 @@
+$body-bg-color: #f5f5f5;
+$font-family: Arial, sans-serif;
+$font-size: 16px;
+$text-color: #333;
+$button-bg-color: #4CAF50;
+$button-bg-color-hover: #3e8e41;
+$button-shadow: 0px 2px 5px #888888;
+$button-border-radius: 5px;
+$user-font: 'Roboto', sans-serif;
+$user-green: rgb(40, 145, 124);
+$user-green-light: #8BC34A;
+$user-green-dark: #388E3C;
+$user-blue: #2196F3;
+$primary-color: #ffffff;
+
+.user-list {
+  h2 {
+    margin-bottom: 16px;
+    margin-left: 20px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+  }
+
+  .user-info {
+    flex: 1;
+    height: 56px;
+  }
+
+  .user-name {
+    font-weight: bold;
+    margin-right: 8px;
+    display: flex;
+  }
+
+  .user-role {
+    color: #888;
+  }
+
+  .user-actions {
+    display: flex;
+    align-items: center;
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: none;
+      color: white;
+      background-color: $user-blue;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($user-blue, 10%);
+      }
+
+      &.btn-primary {
+        background-color: $user-green;
+
+        &:hover {
+          background-color: $user-green-light;
+        }
+      }
+
+      &.btn-danger {
+        background-color: #F44336;
+
+        &:hover {
+          background-color: lighten(#F44336, 10%);
+        }
+      }
+    }
+  }
+}
+
+.error {
+  font-family: $font-family;
+  font-size: $font-size;
+  text-align: center;
+  padding: 50px;
+
+  h1 {
+    font-size: 36px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: $text-color;
+  }
+
+  img {
+    max-width: 20%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  p {
+    margin-bottom: 20px;
+  }
+
+  button {
+    background-color: $button-bg-color;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: $font-size;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: $button-border-radius;
+    box-shadow: $button-shadow;
+
+    &:hover {
+      background-color: $button-bg-color-hover;
+    }
+  }
+}

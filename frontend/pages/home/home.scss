@@ -1,0 +1,188 @@
+// Define your greenish colors here
+$primary-color: #ffffff;
+$secondary-color: #8BC34A;
+$accent-color: rgb(40, 145, 124);
+
+// Global styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  min-width: 440px;
+}
+
+main{
+  margin-top: 90px;
+}
+
+nav {
+  background-color: $primary-color;
+  justify-content: space-between;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+
+  a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+
+    li {
+      margin-right: 1rem;
+    }
+
+    a {
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+}
+
+.logo img {
+  height: 50px;
+}
+
+
+
+.search-bar {
+  display: flex;
+  align-items: center;
+
+  input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+  }
+
+  button {
+    background-color: $accent-color;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+}
+
+
+.ads {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 960px;
+}
+
+.ad {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 1rem;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+}
+
+.medicines {
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .medicine-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .medicine-item {
+      max-width: 250px;
+      img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 0.5rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      button {
+        background-color: $accent-color;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.burger-icon {
+  color: black;
+  display: none;
+}
+
+
+
+@media (max-width: 768px) {
+  /* Hide the Contact Us, Medicines, and About Us sections */
+  nav ul {
+    display: none;
+  }
+
+  .burger-icon{
+    display: block;
+  }
+}
+
+@media (min-width: 1400px) {
+  //header{
+  //  padding-left: 5rem;
+  //  padding-right: 5rem;
+  //}
+
+}
+
+
+.user-nav {
+  display: flex;
+  align-items: center;
+}
+
+.user-nav a {
+  margin-left: 1rem;
+}
+
+.cart-icon img {
+  height: 30px;
+}
+

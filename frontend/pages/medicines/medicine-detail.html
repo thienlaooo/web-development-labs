@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Activated Charcoal Tablets - My Pharmacy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="medicine-detail.css" />
+    <link rel="stylesheet" href="../home/home.css">
+    <script src="../navbar.js" defer></script>
+</head>
+<body>
+<header>
+<!--    <nav>-->
+<!--        <a href="http://localhost:63342/web-development-labs/frontend/pages/home/home.html" class="logo">-->
+<!--            <img src="../../docs/assets/images/medicine-wellness-icon.png" alt="Pharmacy Logo" />-->
+<!--        </a>-->
+<!--        <div class="burger-icon">&#9776;</div>-->
+<!--        <ul>-->
+<!--            <li><a href="#">Medicines</a></li>-->
+<!--            <li><a href="#">About Us</a></li>-->
+<!--            <li><a href="#">Contact Us</a></li>-->
+<!--        </ul>-->
+<!--        <div class="search-bar">-->
+<!--            <input type="text" placeholder="Search for medicines" />-->
+<!--            <button>Search</button>-->
+<!--        </div>-->
+<!--        <div class="user-nav">-->
+<!--            <a href="#">Login</a>-->
+<!--            <a href="#" class="cart-icon">-->
+<!--                <img src="../../docs/assets/images/shopping-cart-icon.png" alt="Cart Icon" />-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </nav>-->
+</header>
+<main>
+    <section class="medicine-details">
+<!--        <div class="medicine-image">-->
+<!--            <img src="../../docs/assets/images/activated-charcoal-tablets.jpeg" alt="Activated Charcoal Tablets" />-->
+<!--        </div>-->
+<!--        <div class="medicine-info">-->
+<!--            <h1>Activated Charcoal Tablets</h1>-->
+<!--            <div class="medicine-rating">-->
+<!--                <span class="star-icon">&#9733;</span>-->
+<!--                <span class="star-icon">&#9733;</span>-->
+<!--                <span class="star-icon">&#9733;</span>-->
+<!--                <span class="star-icon">&#9733;</span>-->
+<!--                <span class="star-icon">&#9733;</span>-->
+<!--                <span class="rating-count">(5)</span>-->
+<!--            </div>-->
+<!--            <p class="medicine-info price">$8.99</p>-->
+<!--            <p class="medicine-info description">Activated Charcoal Tablets are used to treat poisonings and overdoses following oral ingestion. These tablets are also used to relieve gas and bloating.</p>-->
+<!--            <ul class="medicine-features">-->
+<!--                <li><span class="feature-label">Brand:</span> My Pharmacy</li>-->
+<!--                <li><span class="feature-label">Type:</span> Tablet</li>-->
+<!--                <li><span class="feature-label">Dosage:</span> 250mg</li>-->
+<!--                <li><span class="feature-label">Pack Size:</span> 10 Tablets</li>-->
+<!--            </ul>-->
+<!--            <button>Add to Cart</button>-->
+
+
+        </div>
+    </section>
+</main>
+<footer>
+    <!-- Your footer content goes here -->
+</footer>
+<script>
+    function addToCart(medicineId) {
+        if (!sessionStorage.getItem("order")) {
+            console.log("Hi");
+            fetch(`http://127.0.0.1:5000/api/v1/user/${sessionStorage["email"]}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": "Basic " + sessionStorage.getItem("token"),
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    fetch("http://127.0.0.1:5000/api/v1/store/order", {
+                        method: "POST",
+                        body: JSON.stringify({ customer_id: data.id, status: "placed" }),
+                        headers: {
+                            "Authorization": "Basic " + sessionStorage.getItem("token"),
+                            "Content-Type": "application/json"
+                        }
+                    })
+                        .then(resp => resp.json())
+                        .then(data2 => {
+                            sessionStorage.setItem("order", data2.id);
+                            fetch("http://127.0.0.1:5000/api/v1/store/order/medicine", {
+                                method: "POST",
+                                body: JSON.stringify({ order_id: data2.id, medicine_id: medicineId }),
+                                headers: {
+                                    "Authorization": "Basic " + sessionStorage.getItem("token"),
+                                    "Content-Type": "application/json"
+                                }
+                            });
+                        });
+                });
+        } else {
+            fetch("http://127.0.0.1:5000/api/v1/store/order/medicine", {
+                method: "POST",
+                body: JSON.stringify({ order_id: sessionStorage.getItem("order"), medicine_id: medicineId }),
+                headers: {
+                    "Authorization": "Basic " + sessionStorage.getItem("token"),
+                    "Content-Type": "application/json"
+                }
+            });
+        }
+    }
+
+
+    const medicineDetails = document.querySelector('.medicine-details');
+    fetch(`http://127.0.0.1:5000/api/v1/medicine/${sessionStorage["id"]}`)
+        .then(response => response.json())
+        .then(data => {
+            const medsPhoto = document.createElement('div');
+            medsPhoto.classList.add("medicine-image");
+            medsPhoto.innerHTML = `
+                <img src="${data.photoUrls[0]}" alt="${data.name}">
+
+                `;
+            const medsInfo = document.createElement('div');
+            medsInfo.classList.add('medicine-info');
+            medsInfo.innerHTML = `
+                    <h1>${data.name}</h1>
+                    <div class="medicine-rating">
+                        <span class="star-icon">&#9733;</span>
+                        <span class="star-icon">&#9733;</span>
+                        <span class="star-icon">&#9733;</span>
+                        <span class="star-icon">&#9733;</span>
+                        <span class="star-icon">&#9733;</span>
+                        <span class="rating-count">(5)</span>
+                    </div>
+                    <p class="medicine-info price">$${data.price}</p>
+                    <p class="medicine-info description">Activated Charcoal Tablets are used to treat poisonings and overdoses following oral ingestion. These tablets are also used to relieve gas and bloating.</p>
+                    <ul class="medicine-features">
+                        <li><span class="feature-label">Brand:</span> ${data.producer}</li>
+                        <li><span class="feature-label">Type:</span> Tablet</li>
+                        <li><span class="feature-label">Dosage:</span> 250mg</li>
+                        <li><span class="feature-label">Pack Size:</span> 10 Tablets</li>
+                    </ul>
+                    <button onclick="addToCart(${data.id})">Add to Cart</button>
+                `;
+            medicineDetails.appendChild(medsPhoto);
+            medicineDetails.appendChild(medsInfo);
+        })
+        .catch(error => console.error(error));
+</script>
+</body>
+</html>

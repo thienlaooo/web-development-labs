@@ -1,0 +1,63 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login-form {
+  margin: auto;
+  width: 400px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login-form h1 {
+  color: rgb(40, 145, 124);
+  text-align: center;
+  margin-top: 0;
+}
+.login-form a {
+  color: rgb(40, 145, 124);
+  text-align: center;
+  margin-top: 1rem;
+}
+.login-form label {
+  display: block;
+  margin-top: 10px;
+  color: #000000;
+  font-weight: bold;
+}
+.login-form input {
+  display: block;
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.login-form input:invalid:not(:placeholder-shown):focus {
+  border: 2px solid #F44336;
+  box-shadow: 0 0 7px #F44336;
+}
+.login-form button[type=submit] {
+  display: block;
+  margin-top: 20px;
+  background-color: rgb(40, 145, 124);
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.login-form button[type=submit]:hover {
+  background-color: #1d695a;
+}
+
+/*# sourceMappingURL=login.component.css.map */

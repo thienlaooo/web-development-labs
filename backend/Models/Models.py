@@ -53,6 +53,7 @@ class Medicine(Base):
 
     def to_dict(self) -> dict:
         return {
+            'id': self.id,
             'name': self.name,
             'quantity': self.quantity,
             'price': self.price,
@@ -73,6 +74,7 @@ class Order(Base):
 
     def to_dict(self) -> dict:
         return {
+            'id': self.id,
             'customer_id': self.customer_id,
             'date': str(self.date),
             'status': str(self.status)
@@ -101,12 +103,13 @@ class User(Base):
 
     def to_dict(self) -> dict:
         return {
+            'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'password': self.password,
             'phone': self.phone,
             'email': self.email,
-            'role': str(self.role)
+            'role': str(self.role.value)
         }
 
     @validates("first_name")

@@ -6,10 +6,10 @@ import bcrypt
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
-from Models.Models import User, roles
-from api.Auth import auth
+from backend.Models.Models import User, roles
+from backend.api.Auth import auth
 
-engine = create_engine("postgresql://postgres:admin@localhost:5432/Pharmacy")
+engine = create_engine("postgresql://postgres:postgres@localhost:5432/pharmacy")
 Session = sessionmaker(bind=engine)
 session = Session()
 user_api = Blueprint('user_api', __name__)
@@ -32,18 +32,37 @@ def create_user():
     return {"message": "User was created"}, 200
 
 
-@user_api.route("/api/v1/user/<userId>", methods=['GET'])
-@auth.login_required(role='pharmacist')
-def get_user(userId):
+@user_api.route("/api/v1/user/<email>", methods=['GET'])
+@auth.login_required(role=['customer', 'pharmacist'])
+def get_user(email):
     user = session.query(User)
-    currentUser = user.get(int(userId))
-    if currentUser is None:
-        return {"message": "User doesn't exist"}, 404
+    currentUser = user.filter_by(email=email).first()
+    if auth.current_user().id == int(currentUser.id) or auth.current_user().role == roles.pharmacist:
+        if currentUser is None:
+            return {"message": "User doesn't exist"}, 404
+        return Response(
+              response=json.dumps(currentUser.to_dict()),
+              status=200,
+              mimetype='application/json'
+          )
+    else:
+        return {"message": "No permission"}, 403
+
+
+@user_api.route("/api/v1/user", methods=['GET'])
+@auth.login_required(role=['pharmacist'])
+def get_users():
+    users = session.query(User).all()
+    usersJson = []
+    if users is None:
+        return {"message": "Users not found"}, 404
+    for user in users:
+        usersJson.append(user.to_dict())
     return Response(
-          response=json.dumps(currentUser.to_dict()),
-          status=200,
-          mimetype='application/json'
-      )
+        response=json.dumps(usersJson),
+        status=200,
+        mimetype='application/json'
+    )
 
 
 @user_api.route("/api/v1/user/<userId>", methods=['DELETE'])
@@ -81,7 +100,7 @@ def update_user():
     return {"message": "Invalid request body!"}, 400
 
 
-@user_api.route("/api/v1/user/login", methods=['GET'])
+@user_api.route("/api/v1/user/login", methods=['POST'])
 def login_user():
     try:
         data = request.get_json()
@@ -93,6 +112,6 @@ def login_user():
             if not bcrypt.checkpw(data['password'].encode("utf-8"), user.password.encode("utf-8")):
                 return Response("Invalid password", status=404)
             token = base64.encodebytes(f"{data['email']}:{data['password']}".encode('utf-8'))
-            return jsonify({'basic': token.decode("utf-8").replace("\n", "")}), 200
+            return jsonify({'basic': token.decode("utf-8").replace("\n", ""), 'role': user.role.value}), 200
     except:
         return {"message": "Invalid email or password specified"}, 400

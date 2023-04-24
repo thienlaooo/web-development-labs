@@ -1,0 +1,99 @@
+.user-list h2 {
+  margin-bottom: 16px;
+  margin-left: 20px;
+}
+.user-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.user-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 8px;
+}
+.user-list .user-info {
+  flex: 1;
+  height: 56px;
+}
+.user-list .user-name {
+  font-weight: bold;
+  margin-right: 8px;
+  display: flex;
+}
+.user-list .user-role {
+  color: #888;
+}
+.user-list .user-actions {
+  display: flex;
+  align-items: center;
+}
+.user-list .user-actions .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  background-color: #2196F3;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.user-list .user-actions .btn:hover {
+  background-color: #51adf6;
+}
+.user-list .user-actions .btn.btn-primary {
+  background-color: rgb(40, 145, 124);
+}
+.user-list .user-actions .btn.btn-primary:hover {
+  background-color: #8BC34A;
+}
+.user-list .user-actions .btn.btn-danger {
+  background-color: #F44336;
+}
+.user-list .user-actions .btn.btn-danger:hover {
+  background-color: #f77066;
+}
+
+.error {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-align: center;
+  padding: 50px;
+}
+.error h1 {
+  font-size: 36px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
+.error img {
+  max-width: 20%;
+  height: auto;
+  margin-bottom: 20px;
+}
+.error p {
+  margin-bottom: 20px;
+}
+.error button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px #888888;
+}
+.error button:hover {
+  background-color: #3e8e41;
+}
+
+/*# sourceMappingURL=user-list.component.css.map */
