@@ -19,6 +19,10 @@ import { MedicineSearchComponent } from './medicine-search/medicine-search.compo
 import { UserListComponent } from './user-list/user-list.component';
 import {AuthGuardService as AuthGuard} from "./services/auth-guard.service";
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AppErrorDialogComponent } from './app-error-dialog/app-error-dialog.component';
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -34,13 +38,17 @@ import { NotFoundComponent } from './not-found/not-found.component';
     RegisterComponent,
     MedicineSearchComponent,
     UserListComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AppErrorDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatButtonModule
   ],
   providers: [
     {

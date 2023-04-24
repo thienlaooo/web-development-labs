@@ -3,6 +3,8 @@ import {UserService} from "../services/user.service";
 import {User} from "../models";
 import {ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "../services/auth.service";
+import {AppErrorDialogComponent} from "../app-error-dialog/app-error-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-user-list',
@@ -15,7 +17,8 @@ export class UserListComponent implements OnInit{
   admins: User[] = [];
   constructor(
     private userService: UserService,
-    public authService: AuthenticationService) { }
+    public authService: AuthenticationService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.customers = [];
@@ -35,20 +38,38 @@ export class UserListComponent implements OnInit{
             this.admins.push(users[key]);
           }
         }
-      })
+      },
+        error => {
+          this.dialog.open(AppErrorDialogComponent, {
+            data: error.error['message'],
+            disableClose: true,
+          });
+        })
   }
 
   deleteUser(id: number): void {
     this.userService.deleteUser(id)
       .subscribe( res => {
         this.ngOnInit()
-      });
+      },
+        error => {
+          this.dialog.open(AppErrorDialogComponent, {
+            data: error.error['message'],
+            disableClose: true,
+          });
+        });
   }
 
   makeAdmin(id: number): void {
     this.userService.makeAdmin(id)
       .subscribe(res => {
         this.ngOnInit()
-      });
+      },
+        error => {
+          this.dialog.open(AppErrorDialogComponent, {
+            data: error.error['message'],
+            disableClose: true,
+          });
+        });
   }
 }

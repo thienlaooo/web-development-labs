@@ -4,7 +4,6 @@ import {catchError, map, tap} from 'rxjs/operators';
 import { MessageService } from "./message.service";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {Router} from "@angular/router";
-import {Medicine, Order, User} from "../models";
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +38,7 @@ export class AuthenticationService {
     console.log('invoked register');
       return this.http.post<object>('http://127.0.0.1:5000/api/v1/user', {first_name, last_name, password, phone, email, role})
        .pipe(
-         tap(_ => console.log('created user')),
-         catchError(this.handleError<object>('addOrder'))
-         )
+         tap(_ => console.log('created user')));
   }
 
   getToken(): string {
