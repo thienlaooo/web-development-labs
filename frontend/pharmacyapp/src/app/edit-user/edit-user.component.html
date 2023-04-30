@@ -1,0 +1,26 @@
+<main>
+  <div class="user-profile">
+    <div class="profile-header">
+      <img src="https://picsum.photos/200" alt="Profile Picture" class="profile-picture">
+      <h1 class="profile-name" id="profile-name">{{user.first_name + ' ' + user.last_name}}</h1>
+      <p class="profile-bio">Web Developer</p>
+    </div>
+    <div class="profile-body">
+      <form class="login-form" [formGroup]="form" (ngSubmit)="editUser()">
+        <h2 class="section-title">Edit Profile Information</h2>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" formControlName="first_name" >
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" formControlName="last_name" >
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" >
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" formControlName="phone" >
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" class="btn btn-danger" routerLink="/user">Cancel</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+

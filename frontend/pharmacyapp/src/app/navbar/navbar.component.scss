@@ -79,6 +79,34 @@ nav {
 
   .burger-icon{
     display: block;
+    cursor: pointer;
+    img {
+      height: 25px;
+    }
+    ul {
+      display: block;
+      position: absolute;
+      background-color: whitesmoke;
+      max-width: 130px;
+      width: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      z-index: 1;
+      margin-top: 2rem;
+      box-sizing: border-box;
+      li a {
+        display: block;
+        padding: .5em;
+        margin: 0 .5em;
+        border-radius: 50%;
+
+
+        img {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+      }
+    }
   }
 }
 

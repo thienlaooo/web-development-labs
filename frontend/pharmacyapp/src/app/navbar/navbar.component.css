@@ -44,6 +44,32 @@ nav ul a {
   }
   .burger-icon {
     display: block;
+    cursor: pointer;
+  }
+  .burger-icon img {
+    height: 25px;
+  }
+  .burger-icon ul {
+    display: block;
+    position: absolute;
+    background-color: whitesmoke;
+    max-width: 130px;
+    width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: 2rem;
+    box-sizing: border-box;
+  }
+  .burger-icon ul li a {
+    display: block;
+    padding: 0.5em;
+    margin: 0 0.5em;
+    border-radius: 50%;
+  }
+  .burger-icon ul li a img {
+    opacity: 0;
+    transform: translateX(-10px);
   }
 }
 .user-nav {

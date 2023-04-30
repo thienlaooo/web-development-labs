@@ -1,16 +1,22 @@
 <nav>
   <a routerLink="/home" class="logo"><img src="../../assets/images/medicine-wellness-icon.png" alt="Pharmacy Logo"></a>
-  <div class="burger-icon">&#9776;</div>
+  <div class="burger-icon">
+    <a (click)="toggle()">
+      <img  src="../../assets/images/menu.png" alt="burger">
+    </a>
+    <ul *ngIf="(opened$ | async) === true">
+      <li><a routerLink="/medicines" (click)="toggle()">Medicines</a></li>
+      <li><a href="#" (click)="toggle()">About Us</a></li>
+      <li><a href="#" (click)="toggle()">Contact Us</a></li>
+    </ul>
+  </div>
+
   <ul>
     <li><a routerLink="/medicines">Medicines</a></li>
-    <li><a href="#">About Us</a></li>
-    <li><a href="#">Contact Us</a></li>
+    <li><a >About Us</a></li>
+    <li><a >Contact Us</a></li>
   </ul>
   <app-medicine-search></app-medicine-search>
-<!--  <div class="search-bar">-->
-<!--    <input type="text" placeholder="Search for medicines">-->
-<!--    <button>Search</button>-->
-<!--  </div>-->
   <div class="user-nav">
     <a routerLink="/login" *ngIf="(authService.authenticated$ | async) === false">Login</a>
     <a routerLink="/user" *ngIf="(authService.authenticated$ | async) === true">My Account</a>

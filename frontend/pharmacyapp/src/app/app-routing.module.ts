@@ -11,6 +11,7 @@ import {RegisterComponent} from "./register/register.component";
 import {UserListComponent} from "./user-list/user-list.component";
 import {AuthGuardService as AuthGuard} from "./services/auth-guard.service";
 import {NotFoundComponent} from "./not-found/not-found.component";
+import {EditUserComponent} from "./edit-user/edit-user.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'medicines', component:AllMedicinesComponent},
   {path: 'cart', component:CartComponent, canActivate: [AuthGuard]},
   {path: 'user-list', component:UserListComponent, canActivate:[AuthGuard]},
+  {path: 'user/edit/:id', component: EditUserComponent, canActivate: [AuthGuard]},
   {path: '**', component:NotFoundComponent}
 ];
 

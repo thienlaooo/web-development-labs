@@ -29,4 +29,12 @@ export class CartComponent implements OnInit{
         })
       });
   }
+
+  deleteMedicine(medicine_id: number){
+    // @ts-ignore
+    this.orderService.deleteMedicineFromOrder(sessionStorage.getItem('order'), medicine_id)
+      .subscribe(_ => {
+        this.ngOnInit();
+      })
+  }
 }
