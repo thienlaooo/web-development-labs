@@ -35,15 +35,22 @@ export class OrderService {
       });
   }
 
-  addMedicineToOrder(id: number): void {
+  // addMedicineToOrder(id: number): void {
+  //   const addMedicineUrl = 'http://127.0.0.1:5000/api/v1/store/order/medicine';
+  //    this.http.post<Order>(addMedicineUrl, {'order_id': sessionStorage.getItem("order"), 'medicine_id': id})
+  //     .pipe(tap((newOrder: Order) => {
+  //       this.log(`added hero w/ id=${newOrder.id}`);
+  //       this.router.navigate(['/cart']);
+  //       }),
+  //       catchError(this.handleError<Order>('addOrder')))
+  //    .subscribe();
+  // }
+
+  addMedicineToOrder(id: number): Observable<object> {
     const addMedicineUrl = 'http://127.0.0.1:5000/api/v1/store/order/medicine';
-     this.http.post<Order>(addMedicineUrl, {'order_id': sessionStorage.getItem("order"), 'medicine_id': id})
-      .pipe(tap((newOrder: Order) => {
-        this.log(`added hero w/ id=${newOrder.id}`);
-        this.router.navigate(['/home']);
-        }),
-        catchError(this.handleError<Order>('addOrder')))
-     .subscribe();
+     return this.http.post<object>(addMedicineUrl, {'order_id': sessionStorage.getItem("order"), 'medicine_id': id})
+      .pipe(tap(_ => {
+        }))
   }
 
   getMedicinesInOrder(): Observable<Medicine[]> {
@@ -53,6 +60,14 @@ export class OrderService {
         tap(_ => this.log('fetched medicines')),
         catchError(this.handleError<Medicine[]>('getMedicines', []))
       );
+  }
+
+  deleteMedicineFromOrder(order_id: string, medicine_id: number): Observable<object> {
+    return this.http.delete(`http://127.0.0.1:5000/api/v1/store/order/${order_id}/${medicine_id}`)
+      .pipe(
+        tap(resp => console.log(resp)),
+        catchError(this.handleError<object>('deleteMedicine', []))
+      )
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

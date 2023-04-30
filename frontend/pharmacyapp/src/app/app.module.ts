@@ -23,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AppErrorDialogComponent } from './app-error-dialog/app-error-dialog.component';
 import {MatButtonModule} from "@angular/material/button";
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MatButtonModule} from "@angular/material/button";
     MedicineSearchComponent,
     UserListComponent,
     NotFoundComponent,
-    AppErrorDialogComponent
+    AppErrorDialogComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

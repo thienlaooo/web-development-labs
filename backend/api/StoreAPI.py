@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, Response, request, jsonify, json
 import json
 
 from psycopg2 import IntegrityError
+from sqlalchemy.exc import IntegrityError as IntErr
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
 from backend.Models.Models import Order, Medicine, Order_Medicine, roles
@@ -72,8 +73,9 @@ def add_medicine_to_order():
     session.add(order_medicine)
     try:
         session.commit()
-    except IntegrityError:
-        return Response(status=402)
+    except IntErr:
+        session.rollback()
+        return {"message": 'Medicine already in order'}, 402
     return {"message": 'Medicine successfully added to order!'}, 200
 
 

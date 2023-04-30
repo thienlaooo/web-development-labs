@@ -4,13 +4,6 @@
   </div>
 
   <div class="suggestions">
-<!--    <ul class="search-result">-->
-<!--      <li *ngFor="let medicine of searchMedicines$ | async" >-->
-<!--        <a routerLink="/detail/{{medicine.id}}">-->
-<!--          {{medicine.name}}-->
-<!--        </a>-->
-<!--      </li>-->
-<!--    </ul>-->
     <div class="search-item" *ngFor="let medicine of searchMedicines$ | async">
         <a routerLink="/detail/{{medicine.id}}" (click)="onClick()">
           <div class="poster">

@@ -2,14 +2,14 @@
   <div class="user-profile">
     <div class="profile-header">
       <img src="https://picsum.photos/200" alt="Profile Picture" class="profile-picture">
-      <h1 class="profile-name" id="profile-name"></h1>
+      <h1 class="profile-name" id="profile-name">{{user.first_name + ' ' + user.last_name}}</h1>
       <p class="profile-bio">Web Developer</p>
     </div>
     <div class="profile-body">
       <h2 class="section-title">Profile Information</h2>
       <div class="info-row">
-        <div class="info-label">Username:</div>
-        <div class="info-value" id="username">{{user.email}}</div>
+        <div class="info-label">Full name:</div>
+        <div class="info-value" id="username">{{user.first_name + ' ' + user.last_name}}</div>
       </div>
       <div class="info-row">
         <div class="info-label">Email:</div>
@@ -28,7 +28,7 @@
         <div class="info-value">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc eget convallis fringilla, turpis risus malesuada enim, sit amet fringilla urna magna a nibh. Nunc dapibus efficitur nisi, vel suscipit elit vehicula nec. </div>
       </div>
       <div>
-        <button class="btn">Edit Profile</button>
+        <button class="btn" routerLink="/user/edit/{{user.id}}">Edit Profile</button>
         <button class="btn btn-danger" (click)="authService.logout()">Logout</button>
       </div>
     </div>
