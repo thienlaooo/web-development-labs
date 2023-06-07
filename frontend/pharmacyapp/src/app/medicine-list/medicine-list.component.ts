@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import { Medicine } from "../models";
 import { MedicineService } from "../services/medicine.service";
 
