@@ -22,7 +22,7 @@ export class MedicineSearchComponent implements OnInit{
       .subscribe(medicines => this.medicines = medicines);
   }
 
-  private searchTerms = new Subject<string>();
+  searchTerms = new Subject<string>();
 
 
   // Push a search term into the observable stream.
