@@ -39,8 +39,8 @@ export class UserService {
       )
   }
 
-  editUser(id: number, first_name: string, last_name: string, email: string, phone: string): Observable<object> {
-    return this.http.put<object>(`http://127.0.0.1:5000/api/v1/user`, {id: id, first_name: first_name, last_name: last_name, email: email, phone: phone})
+  editUser(id: number, first_name: string, last_name: string, email: string, phone: string): Observable<User> {
+    return this.http.put<User>(`http://127.0.0.1:5000/api/v1/user`, {id: id, first_name: first_name, last_name: last_name, email: email, phone: phone})
       .pipe(
         tap(_ => console.log('edited user'))
       )

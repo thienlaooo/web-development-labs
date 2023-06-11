@@ -12,7 +12,6 @@ export class NavbarComponent {
   constructor(public authService: AuthenticationService) {
   }
   toggle(): void {
-    console.log('toggle invoked');
     if (this.opened$.value){
       this.opened$.next(false);
     } else {
